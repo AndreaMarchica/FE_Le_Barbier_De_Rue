@@ -21,7 +21,7 @@ const Mynavbar = () => {
           />
         </div>
       </NavbarBrand>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden sm:flex gap-4 ml-5" justify="center">
         <NavbarItem>
           <Link color="foreground" href="#">
             Prenotazioni
