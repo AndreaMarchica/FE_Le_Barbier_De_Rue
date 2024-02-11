@@ -5,6 +5,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import moment from "moment";
 import "moment/locale/it";
+import ReservationModal from "./ReservationModal";
 
 const Reservations = () => {
   const calendarRef = useRef(null);
