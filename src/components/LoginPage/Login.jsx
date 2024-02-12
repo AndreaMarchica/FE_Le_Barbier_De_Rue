@@ -5,6 +5,7 @@ import { Col, Form, Row } from "react-bootstrap";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { getMeDataAction } from "../../redux/actions";
+import { loginAction } from "../../redux/actions";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -35,6 +36,7 @@ const Login = () => {
         // Aggiungi un controllo per assicurarti che data sia definito
         if (data && data.token) {
           localStorage.setItem("token", data.token);
+          dispatch(loginAction());
           dispatch(getMeDataAction());
         } else {
           console.error("Dati non validi nella risposta:", data);

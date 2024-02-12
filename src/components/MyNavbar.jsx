@@ -17,7 +17,7 @@ const Mynavbar = () => {
   const isUserLoggedIn = !!meDataFromReduxStore;
 
   return (
-    <Navbar>
+    <Navbar className="drop-shadow-xl pt-2">
       <NavbarBrand>
         <div className="max-w-xxs mx-auto">
           <img
@@ -29,7 +29,7 @@ const Mynavbar = () => {
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4 ml-5" justify="center">
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/reservations">
             Prenotazioni
           </Link>
         </NavbarItem>
@@ -49,8 +49,8 @@ const Mynavbar = () => {
           <Link href="/login">Login</Link>
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
+          <Button as={Link} color="primary" href="/register" variant="flat">
+            Registrati
           </Button>
         </NavbarItem>
         {isUserLoggedIn && ( // Mostra il componente User solo se l'utente è loggato

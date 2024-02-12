@@ -1,4 +1,6 @@
 export const GET_ME = "GET_ME";
+export const LOGIN = "LOGIN";
+export const LOGOUT = "LOGOUT";
 
 export const getMeDataAction = () => {
   const token = localStorage.getItem("token");
@@ -28,3 +30,10 @@ export const getMeDataAction = () => {
       });
   };
 };
+export const loginAction = () => ({
+  type: LOGIN,
+});
+
+export const logoutAction = () => ({
+  type: LOGOUT,
+});
