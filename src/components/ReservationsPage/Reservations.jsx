@@ -6,51 +6,69 @@ import interactionPlugin from "@fullcalendar/interaction";
 import moment from "moment";
 import "moment/locale/it";
 import ReservationModal from "./ReservationModal";
+import { useDisclosure } from "@nextui-org/react";
+import { getReservations } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const Reservations = () => {
   const calendarRef = useRef(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
+  const reservationsDataFromRedux = useSelector(
+    (state) => state.reservations.reservations.content
+  );
 
   const handleCustomButtonClick = () => {
     if (calendarRef.current) {
       calendarRef.current.getApi().gotoDate(moment().toISOString());
     }
   };
-  const [events, setEvents] = useState([
-    // Esempio di un evento
-    {
-      title: "Prenotato",
-      start: "2024-02-09T10:00:00",
-      end: "2024-02-09T10:30:00",
-    },
-  ]);
+  const [events, setEvents] = useState(reservationsDataFromRedux);
+
   useEffect(() => {
     // Configura moment per l'italiano
     moment.locale("it");
+    dispatch(getReservations());
   }, []);
 
+  useEffect(() => {
+    if (Array.isArray(reservationsDataFromRedux)) {
+      const reservations = reservationsDataFromRedux.map((reservation) => ({
+        title: "Prenotato",
+        start: reservation.reservationDate,
+        end: moment(reservation.reservationDate)
+          .add(30, "minutes")
+          .toISOString(),
+      }));
+
+      setEvents(reservations);
+    }
+  }, [reservationsDataFromRedux]);
+
   const handleDateClick = (arg) => {
-    const selectedDate = moment(arg.date);
+    const selectedDate = moment(arg.date || arg.start);
     const currentDate = moment();
     // Controlla se la data selezionata è nel passato
     if (selectedDate.isBefore(currentDate, "day")) {
       alert("Non puoi prenotare nel passato!");
       return;
     }
-    const title = prompt("Inserisci il nome del cliente:");
-    if (title) {
-      setEvents([
-        ...events,
-        {
-          title,
-          start: arg.date,
-          end: moment(arg.date).add(30, "minutes").toDate(),
-        },
-      ]);
+    // Salva la data selezionata nello stato
+    setSelectedDate(selectedDate);
 
-      // Mostra un alert di conferma
-      alert("Prenotazione creata con successo!");
-    }
+    // Apri il modale
+    console.log("Modal should open now.");
+    onOpen();
   };
+
+  /*   const handleModalClose = () => {
+    // Chiudi il modale
+    console.log("Closing modal.");
+    onClose();
+    // Pulisci la data selezionata
+    setSelectedDate(null);
+  }; */
   return (
     <div className="p-5">
       <FullCalendar
@@ -96,6 +114,11 @@ const Reservations = () => {
         allDaySlot={false} // Imposta allDaySlot su false per nascondere l'opzione All-day
         slotLabelInterval={{ minutes: 30 }} // Imposta l'intervallo tra le etichette degli orari
         contentHeight="auto" // Imposta l'altezza del contenuto su 'auto'
+      />
+      <ReservationModal
+        onClose={onClose}
+        selectedDate={selectedDate}
+        isOpen={isOpen}
       />
     </div>
   );
