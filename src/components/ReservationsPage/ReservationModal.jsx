@@ -10,6 +10,8 @@ import {
 } from "@nextui-org/react";
 import { Form, Row } from "react-bootstrap";
 import moment from "moment";
+import { handleSingleReservation } from "../../redux/actions";
+import { useSelector } from "react-redux";
 
 const ReservationModal = ({ onClose, selectedDate, isOpen }) => {
   const { onClose: modalOnClose } = useDisclosure();
@@ -17,6 +19,13 @@ const ReservationModal = ({ onClose, selectedDate, isOpen }) => {
   const [beardcuts, setBeardcuts] = useState([]);
   const [selectedHaircut, setSelectedHaircut] = useState("");
   const [selectedBeardcut, setSelectedBeardcut] = useState("");
+  const userId = useSelector((state) => state.me.userData.id);
+  // const postPayload = {
+  //   reservationDate: selectedDate,
+  //   haircutType: selectedHaircut,
+  //   beardcutType: selectedHaircut,
+  //   userId: userId,
+  // };
 
   useEffect(() => {
     if (isOpen) {
@@ -125,7 +134,17 @@ const ReservationModal = ({ onClose, selectedDate, isOpen }) => {
             <Button color="danger" variant="light" onClick={handleCancel}>
               Annulla
             </Button>
-            <Button color="primary" onClick={"Zio"}>
+            <Button
+              color="primary"
+              onClick={() =>
+                handleSingleReservation(
+                  selectedDate,
+                  selectedHaircut,
+                  selectedBeardcut,
+                  userId
+                )
+              }
+            >
               Prenota
             </Button>
           </ModalFooter>
