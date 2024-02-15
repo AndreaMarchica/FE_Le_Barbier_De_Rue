@@ -11,15 +11,18 @@ import {
 import { Form, Row } from "react-bootstrap";
 import moment from "moment";
 import { handleSingleReservation } from "../../redux/actions";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import { getReservations } from "../../redux/actions";
 
-const ReservationModal = ({ onClose, selectedDate, isOpen }) => {
+const ReservationModal = ({ onClose, selectedDate, isOpen, formattedDate }) => {
   const { onClose: modalOnClose } = useDisclosure();
   const [haircuts, setHaircuts] = useState([]);
   const [beardcuts, setBeardcuts] = useState([]);
-  const [selectedHaircut, setSelectedHaircut] = useState("");
-  const [selectedBeardcut, setSelectedBeardcut] = useState("");
+  const [selectedHaircut, setSelectedHaircut] = useState(null);
+  const [selectedBeardcut, setSelectedBeardcut] = useState(null);
   const userId = useSelector((state) => state.me.userData.id);
+  const dispatch = useDispatch();
   // const postPayload = {
   //   reservationDate: selectedDate,
   //   haircutType: selectedHaircut,
@@ -96,8 +99,12 @@ const ReservationModal = ({ onClose, selectedDate, isOpen }) => {
                 <select
                   id="haircut"
                   name="haircut"
-                  value={selectedHaircut}
-                  onChange={(e) => setSelectedHaircut(e.target.value)}
+                  value={selectedHaircut || ""}
+                  onChange={(e) =>
+                    setSelectedHaircut(
+                      e.target.value === "" ? null : e.target.value
+                    )
+                  }
                 >
                   <option value="" disabled>
                     Seleziona un taglio capelli
@@ -115,8 +122,12 @@ const ReservationModal = ({ onClose, selectedDate, isOpen }) => {
                 <select
                   id="beardcut"
                   name="beardcut"
-                  value={selectedBeardcut}
-                  onChange={(e) => setSelectedBeardcut(e.target.value)}
+                  value={selectedBeardcut || ""}
+                  onChange={(e) =>
+                    setSelectedBeardcut(
+                      e.target.value === "" ? null : e.target.value
+                    )
+                  }
                 >
                   <option value="" disabled>
                     Seleziona un taglio barba
@@ -136,14 +147,28 @@ const ReservationModal = ({ onClose, selectedDate, isOpen }) => {
             </Button>
             <Button
               color="primary"
-              onClick={() =>
-                handleSingleReservation(
-                  selectedDate,
-                  selectedHaircut,
-                  selectedBeardcut,
-                  userId
-                )
-              }
+              disabled={!selectedHaircut && !selectedBeardcut} // Disabilita se entrambi sono null
+              onClick={async () => {
+                await dispatch(
+                  handleSingleReservation(
+                    formattedDate,
+                    selectedHaircut,
+                    selectedBeardcut,
+                    userId
+                  )
+                );
+                handleCancel(); // Chiudi il modale dopo la prenotazione
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "Your work has been saved",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                dispatch(getReservations());
+                setSelectedHaircut(null);
+                setSelectedBeardcut(null);
+              }}
             >
               Prenota
             </Button>

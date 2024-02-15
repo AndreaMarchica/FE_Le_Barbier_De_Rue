@@ -15,16 +15,19 @@ const Reservations = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
+  const formattedDate = selectedDate
+    ? selectedDate.format("YYYY-MM-DDTHH:mm:ss")
+    : null;
+
   const reservationsDataFromRedux = useSelector(
     (state) => state.reservations.reservations.content
   );
-
+  const [events, setEvents] = useState(reservationsDataFromRedux);
   const handleCustomButtonClick = () => {
     if (calendarRef.current) {
       calendarRef.current.getApi().gotoDate(moment().toISOString());
     }
   };
-  const [events, setEvents] = useState(reservationsDataFromRedux);
 
   useEffect(() => {
     // Configura moment per l'italiano
@@ -41,7 +44,6 @@ const Reservations = () => {
           .add(30, "minutes")
           .toISOString(),
       }));
-
       setEvents(reservations);
     }
   }, [reservationsDataFromRedux]);
@@ -60,6 +62,21 @@ const Reservations = () => {
     // Apri il modale
     console.log("Modal should open now.");
     onOpen();
+  };
+
+  const handleEventClick = (arg) => {
+    const reservationData = reservationsDataFromRedux.find((reservation) =>
+      moment(reservation.reservationDate).isSame(arg.event.start, "minute")
+    );
+
+    // Recupera i dati della prenotazione e apri un nuovo modale per modifica/eliminazione
+    if (reservationData) {
+      // Esegui le operazioni necessarie per aprire un nuovo modale
+      console.log(
+        "Open modal for editing/deleting reservation:",
+        reservationData
+      );
+    }
   };
 
   /*   const handleModalClose = () => {
@@ -92,6 +109,7 @@ const Reservations = () => {
         dayMaxEvents={true}
         events={events}
         dateClick={handleDateClick}
+        eventClick={handleEventClick} // Aggiungi la funzione eventClick
         locale="it" // Imposta la localizzazione in italiano
         slotLabelFormat={{
           hour: "numeric",
@@ -119,6 +137,7 @@ const Reservations = () => {
         onClose={onClose}
         selectedDate={selectedDate}
         isOpen={isOpen}
+        formattedDate={formattedDate}
       />
     </div>
   );

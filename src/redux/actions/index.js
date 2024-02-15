@@ -70,47 +70,45 @@ export const getReservations = () => {
 };
 export const handleSingleReservation = (
   reservationDate,
-  haircutType,
-  beardcutType,
+  haircutId,
+  beardcutId,
   userId
 ) => {
   console.log("Parametri di handleSingleReservation:", {
     reservationDate,
-    haircutType,
-    beardcutType,
+    haircutId,
+    beardcutId,
     userId,
   });
   const token = localStorage.getItem("token");
   return async (dispatch) => {
-    fetch("http://localhost:3001/reservations", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify({
-        reservationDate,
-        haircutType,
-        beardcutType,
-        userId,
-      }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error("Errore nel salvataggio della prenotazione");
-        }
-      })
-      .then((reservation) => {
+    try {
+      const res = await fetch("http://localhost:3001/reservations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+          reservationDate,
+          haircutId,
+          beardcutId,
+          userId,
+        }),
+      });
+
+      if (res.ok) {
+        const reservation = await res.json();
         console.log(reservation);
         dispatch({
           type: POST_RESERVATION,
           payload: reservation,
         });
-      })
-      .catch((err) => {
-        console.log("errore", err);
-      });
+      } else {
+        throw new Error("Errore nel salvataggio della prenotazione");
+      }
+    } catch (err) {
+      console.log("errore", err);
+    }
   };
 };
