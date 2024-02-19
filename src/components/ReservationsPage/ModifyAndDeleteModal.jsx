@@ -10,12 +10,15 @@ import {
 } from "@nextui-org/react";
 import { Form, Row } from "react-bootstrap";
 import moment from "moment";
-import { handleSingleReservation } from "../../redux/actions";
+import {
+  handleSingleReservation,
+  handleDeleteReservation,
+} from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { getReservations } from "../../redux/actions";
 
-const ReservationModal = ({
+const ModifyAndDeleteModal = ({
   onClose,
   selectedDate,
   isOpen,
@@ -29,25 +32,15 @@ const ReservationModal = ({
   const [selectedBeardcut, setSelectedBeardcut] = useState(null);
   const userId = useSelector((state) => state.me.userData.id);
   const dispatch = useDispatch();
-  // const postPayload = {
-  //   reservationDate: selectedDate,
-  //   haircutType: selectedHaircut,
-  //   beardcutType: selectedHaircut,
-  //   userId: userId,
-  // };
 
   useEffect(() => {
     if (isOpen) {
-      // Esegui il fetch solo quando il modale è aperto
       fetchHaircuts();
       fetchBeardcuts();
-      // Riempire i select con i dati della prenotazione cliccata
+
       if (reservationData) {
-        // Popola i select con i nomi corrispondenti agli ID
-        setSelectedHaircut(getServiceName(reservationData.haircutId, haircuts));
-        setSelectedBeardcut(
-          getServiceName(reservationData.beardcutId, beardcuts)
-        );
+        setSelectedHaircut(reservationData.haircutId);
+        setSelectedBeardcut(reservationData.beardcutId);
       }
     }
   }, [isOpen, reservationData]);
@@ -60,11 +53,8 @@ const ReservationModal = ({
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Haircuts data:", data);
         if (Array.isArray(data)) {
           setHaircuts(data.filter((service) => service.category === "capelli"));
-        } else {
-          console.error("I dati ricevuti non sono un array:", data);
         }
       })
       .catch((error) => {
@@ -80,34 +70,39 @@ const ReservationModal = ({
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Beardcuts data:", data);
         if (Array.isArray(data)) {
           setBeardcuts(data.filter((service) => service.category === "barba"));
-        } else {
-          console.error("I dati ricevuti non sono un array:", data);
         }
       })
       .catch((error) => {
         console.error("Errore durante il recupero dei tagli barba:", error);
       });
   };
+
   const handleCancel = () => {
     onClose();
     modalOnClose();
-    // Pulire i dati selezionati quando il modale viene chiuso
     setSelectedHaircut(null);
     setSelectedBeardcut(null);
   };
-  const handleDelete = async () => {
-    // Aggiungi la logica per eliminare la prenotazione qui
-    console.log("Elimina la prenotazione");
-    handleCancel();
-  };
-  // Funzione per ottenere il nome corrispondente all'ID
-  const getServiceName = (serviceId, services) => {
-    const service = services.find((s) => s.id === serviceId);
-    return service ? service.name : "";
-  };
+
+  //   const handleDelete = async () => {
+  //     try {
+  //       await dispatch(handleDeleteReservation(reservationData.id));
+  //       handleCancel();
+  //       Swal.fire({
+  //         position: "center",
+  //         icon: "success",
+  //         title: "Prenotazione eliminata!",
+  //         showConfirmButton: false,
+  //         timer: 2000,
+  //       });
+  //       dispatch(getReservations());
+  //     } catch (error) {
+  //       console.error("Errore durante l'eliminazione della prenotazione:", error);
+  //       // Aggiungi gestione degli errori se necessario
+  //     }
+  //   };
 
   return (
     <>
@@ -115,6 +110,10 @@ const ReservationModal = ({
         <ModalContent>
           <ModalHeader className="flex flex-col gap-1">
             {selectedDate && moment(selectedDate).format("LLLL")}
+            <p>
+              <b>Prenotato da:</b>{" "}
+              {reservationData.user.name + " " + reservationData.user.surname}
+            </p>
           </ModalHeader>
           <ModalBody>
             <Form>
@@ -172,48 +171,50 @@ const ReservationModal = ({
               Annulla
             </Button>
             {reservationData && (
-              <Button
-                color="danger"
-                onClick={() => {
-                  // Aggiungi qui la logica per eliminare la prenotazione
-                  console.log("Elimina la prenotazione");
-                  handleCancel();
-                }}
-              >
-                Elimina
-              </Button>
+              <>
+                <Button color="danger" onClick={"handleDelete"}>
+                  Elimina
+                </Button>
+                <Button
+                  color="primary"
+                  disabled={!selectedHaircut && !selectedBeardcut}
+                  onClick={async () => {
+                    try {
+                      await dispatch(
+                        handleSingleReservation(
+                          formattedDate,
+                          selectedHaircut,
+                          selectedBeardcut,
+                          userId
+                        )
+                      );
+                      handleCancel();
+                      Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Prenotazione modificata!",
+                        showConfirmButton: false,
+                        timer: 2000,
+                      });
+                      dispatch(getReservations());
+                    } catch (error) {
+                      console.error(
+                        "Errore durante la modifica della prenotazione:",
+                        error
+                      );
+                      // Aggiungi gestione degli errori se necessario
+                    }
+                  }}
+                >
+                  Modifica
+                </Button>
+              </>
             )}
-            <Button
-              color="primary"
-              disabled={!selectedHaircut && !selectedBeardcut} // Disabilita se entrambi sono null
-              onClick={async () => {
-                await dispatch(
-                  handleSingleReservation(
-                    formattedDate,
-                    selectedHaircut,
-                    selectedBeardcut,
-                    userId
-                  )
-                );
-                handleCancel(); // Chiudi il modale dopo la prenotazione
-                Swal.fire({
-                  position: "center",
-                  icon: "success",
-                  title: "Prenotazione salvata!",
-                  showConfirmButton: false,
-                  timer: 2000,
-                });
-                dispatch(getReservations());
-                setSelectedHaircut(null);
-                setSelectedBeardcut(null);
-              }}
-            >
-              Prenota
-            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
     </>
   );
 };
-export default ReservationModal;
+
+export default ModifyAndDeleteModal;

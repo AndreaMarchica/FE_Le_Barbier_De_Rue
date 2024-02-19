@@ -57,7 +57,7 @@ export const getReservations = () => {
         }
       })
       .then((reservations) => {
-        console.log(reservations.content);
+        console.log(reservations);
         dispatch({
           type: GET_RESERVATIONS,
           payload: reservations,

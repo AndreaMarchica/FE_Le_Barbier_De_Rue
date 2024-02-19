@@ -15,6 +15,9 @@ import { useSelector } from "react-redux";
 const Mynavbar = () => {
   const meDataFromReduxStore = useSelector((state) => state.me.userData);
   const isUserLoggedIn = !!meDataFromReduxStore;
+  const pathname = window.location.pathname;
+
+  const pages = ["home", "servizi", "prenotazioni", "store", "contatti"];
 
   return (
     <Navbar className="drop-shadow-xl pt-2">
@@ -28,21 +31,17 @@ const Mynavbar = () => {
         </div>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4 ml-5" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="/reservations">
-            Prenotazioni
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Prodotti
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Contatti
-          </Link>
-        </NavbarItem>
+        {pages.map((page) => (
+          <NavbarItem key={page}>
+            <Link
+              color="foreground"
+              href={`/${page}`}
+              className={pathname.includes(page) ? "active" : ""}
+            >
+              {page.charAt(0).toUpperCase() + page.slice(1)}
+            </Link>
+          </NavbarItem>
+        ))}
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">

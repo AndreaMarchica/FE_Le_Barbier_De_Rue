@@ -9,10 +9,13 @@ import ReservationModal from "./ReservationModal";
 import { useDisclosure } from "@nextui-org/react";
 import { getReservations } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import ModifyAndDeleteModal from "./ModifyAndDeleteModal";
 
 const Reservations = () => {
   const calendarRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
   const formattedDate = selectedDate
@@ -20,7 +23,7 @@ const Reservations = () => {
     : null;
 
   const reservationsDataFromRedux = useSelector(
-    (state) => state.reservations.reservations.content
+    (state) => state.reservations.reservations
   );
   const [events, setEvents] = useState(reservationsDataFromRedux);
   const handleCustomButtonClick = () => {
@@ -69,13 +72,10 @@ const Reservations = () => {
       moment(reservation.reservationDate).isSame(arg.event.start, "minute")
     );
 
-    // Recupera i dati della prenotazione e apri un nuovo modale per modifica/eliminazione
+    // Imposta il dato dell'evento selezionato nello state e apri il nuovo modale
     if (reservationData) {
-      // Esegui le operazioni necessarie per aprire un nuovo modale
-      console.log(
-        "Open modal for editing/deleting reservation:",
-        reservationData
-      );
+      setSelectedEvent(reservationData);
+      onOpen();
     }
   };
 
@@ -133,12 +133,29 @@ const Reservations = () => {
         slotLabelInterval={{ minutes: 30 }} // Imposta l'intervallo tra le etichette degli orari
         contentHeight="auto" // Imposta l'altezza del contenuto su 'auto'
       />
-      <ReservationModal
-        onClose={onClose}
-        selectedDate={selectedDate}
-        isOpen={isOpen}
-        formattedDate={formattedDate}
-      />
+      {/* Usa il ReservationModal solo per dateClick */}
+      {selectedDate && (
+        <ReservationModal
+          onClose={onClose}
+          selectedDate={selectedDate}
+          isOpen={isOpen}
+          formattedDate={formattedDate}
+        />
+      )}
+
+      {/* Usa il nuovo modale solo per eventClick */}
+      {selectedEvent && (
+        <ModifyAndDeleteModal
+          onClose={() => {
+            setSelectedEvent(null);
+            onClose();
+          }}
+          selectedDate={selectedEvent.reservationDate}
+          isOpen={isOpen}
+          formattedDate={formattedDate}
+          reservationData={selectedEvent}
+        />
+      )}
     </div>
   );
 };
