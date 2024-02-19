@@ -1,5 +1,5 @@
 import "./App.css";
-import Homepage from "./components/Homepage";
+import Homepage from "./components/Homepage/Homepage";
 import Mynavbar from "./components/MyNavbar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Reservations from "./components/ReservationsPage/Reservations";
@@ -8,6 +8,7 @@ import Register from "./components/RegisterPage/Register";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getMeDataAction, loginAction } from "./redux/actions";
+import MyFooter from "./components/MyFooter";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ function App() {
           path="/prenotazioni"
         ></Route>
       </Routes>
+      <MyFooter></MyFooter>
     </BrowserRouter>
   );
 }
