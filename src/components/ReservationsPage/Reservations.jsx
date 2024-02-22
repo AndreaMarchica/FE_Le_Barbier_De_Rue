@@ -15,6 +15,9 @@ const Reservations = () => {
   const calendarRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [isReservationModalOpen, setIsReservationModalOpen] = useState(false);
+  const [isModifyAndDeleteModalOpen, setIsModifyAndDeleteModalOpen] =
+    useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
@@ -65,6 +68,7 @@ const Reservations = () => {
     // Apri il modale
     console.log("Modal should open now.");
     onOpen();
+    setIsReservationModalOpen(true);
   };
 
   const handleEventClick = (arg) => {
@@ -75,7 +79,8 @@ const Reservations = () => {
     // Imposta il dato dell'evento selezionato nello state e apri il nuovo modale
     if (reservationData) {
       setSelectedEvent(reservationData);
-      onOpen();
+      setIsModifyAndDeleteModalOpen(true);
+      console.log(reservationData);
     }
   };
 
@@ -136,9 +141,12 @@ const Reservations = () => {
       {/* Usa il ReservationModal solo per dateClick */}
       {selectedDate && (
         <ReservationModal
-          onClose={onClose}
+          onClose={() => {
+            setSelectedDate(null);
+            setIsReservationModalOpen(false);
+          }}
           selectedDate={selectedDate}
-          isOpen={isOpen}
+          isOpen={isReservationModalOpen}
           formattedDate={formattedDate}
         />
       )}
@@ -148,10 +156,10 @@ const Reservations = () => {
         <ModifyAndDeleteModal
           onClose={() => {
             setSelectedEvent(null);
-            onClose();
+            setIsModifyAndDeleteModalOpen(false);
           }}
           selectedDate={selectedEvent.reservationDate}
-          isOpen={isOpen}
+          isOpen={isModifyAndDeleteModalOpen}
           formattedDate={formattedDate}
           reservationData={selectedEvent}
         />

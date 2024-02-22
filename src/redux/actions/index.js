@@ -72,12 +72,14 @@ export const handleSingleReservation = (
   reservationDate,
   haircutId,
   beardcutId,
+  comboId,
   userId
 ) => {
   console.log("Parametri di handleSingleReservation:", {
     reservationDate,
     haircutId,
     beardcutId,
+    comboId,
     userId,
   });
   const token = localStorage.getItem("token");
@@ -93,6 +95,7 @@ export const handleSingleReservation = (
           reservationDate,
           haircutId,
           beardcutId,
+          comboId,
           userId,
         }),
       });
