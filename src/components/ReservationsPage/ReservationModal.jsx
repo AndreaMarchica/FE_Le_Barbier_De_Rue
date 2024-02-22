@@ -12,7 +12,7 @@ import {
 } from "@nextui-org/react";
 import { Form, Row } from "react-bootstrap";
 import moment from "moment";
-import { handleSingleReservation } from "../../redux/actions";
+import { createSingleReservation } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { getReservations } from "../../redux/actions";
@@ -279,7 +279,7 @@ const ReservationModal = ({
                 if (selectedServices.length === 1) {
                   // Ensure only one checkbox is selected
                   console.log(selectedServices);
-                  console.log("Parametri prima di handleSingleReservation:", {
+                  console.log("Parametri prima di createSingleReservation:", {
                     formattedDate,
                     selectedHaircut,
                     selectedBeardcut,
@@ -287,7 +287,7 @@ const ReservationModal = ({
                     userId,
                   });
                   await dispatch(
-                    handleSingleReservation(
+                    createSingleReservation(
                       formattedDate,
                       selectedHaircut,
                       selectedBeardcut,

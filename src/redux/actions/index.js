@@ -3,6 +3,7 @@ export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const GET_RESERVATIONS = "GET_RESERVATIONS";
 export const POST_RESERVATION = "POST_RESERVATION";
+export const DELETE_RESERVATION = "DELETE_RESERVATION";
 
 export const getMeDataAction = () => {
   const token = localStorage.getItem("token");
@@ -68,7 +69,8 @@ export const getReservations = () => {
       });
   };
 };
-export const handleSingleReservation = (
+
+export const createSingleReservation = (
   reservationDate,
   haircutId,
   beardcutId,
@@ -112,6 +114,35 @@ export const handleSingleReservation = (
       }
     } catch (err) {
       console.log("errore", err);
+    }
+  };
+};
+
+export const deleteSingleReservation = (reservationData) => {
+  const token = localStorage.getItem("token");
+  return async (dispatch) => {
+    try {
+      const res = await fetch(
+        `http://localhost:3001/reservations/${reservationData.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+
+      if (res.ok) {
+        dispatch({
+          type: DELETE_RESERVATION,
+          payload: reservationData.id,
+        });
+      } else {
+        throw new Error("Errore durante l'eliminazione della prenotazione");
+      }
+    } catch (err) {
+      console.error("Errore", err);
     }
   };
 };

@@ -3,20 +3,15 @@ import {
   Modal,
   ModalContent,
   ModalHeader,
-  ModalBody,
   ModalFooter,
   Button,
   useDisclosure,
-  Checkbox,
-  AccordionItem,
-  Accordion,
   Popover,
   PopoverTrigger,
   PopoverContent,
 } from "@nextui-org/react";
-import { Form, Row } from "react-bootstrap";
 import moment from "moment";
-import { handleSingleReservation } from "../../redux/actions";
+import { deleteSingleReservation } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { getReservations } from "../../redux/actions";
@@ -25,19 +20,15 @@ const ModifyAndDeleteModal = ({
   onClose,
   selectedDate,
   isOpen,
-  formattedDate,
   reservationData,
 }) => {
   const { onClose: modalOnClose } = useDisclosure();
   const [haircuts, setHaircuts] = useState([]);
   const [beardcuts, setBeardcuts] = useState([]);
   const [combos, setCombos] = useState([]);
-  const [selectedService, setSelectedService] = useState(null);
-
   const [selectedHaircut, setSelectedHaircut] = useState(null);
   const [selectedBeardcut, setSelectedBeardcut] = useState(null);
   const [selectedCombo, setSelectedCombo] = useState(null);
-
   const userId = useSelector((state) => state.me.userData.id);
   const dispatch = useDispatch();
 
@@ -52,29 +43,8 @@ const ModifyAndDeleteModal = ({
         setSelectedBeardcut(reservationData.beardcutId);
         setSelectedCombo(reservationData.comboId);
       }
-      const serviceId =
-        reservationData.haircutId ||
-        reservationData.beardcutId ||
-        reservationData.comboId;
-      setSelectedService(serviceId);
     }
   }, [isOpen, reservationData]);
-
-  const handleCheckboxChange = (serviceId) => {
-    setSelectedService(serviceId);
-    setSelectedHaircut(null);
-    setSelectedBeardcut(null);
-    setSelectedCombo(null);
-
-    // Aggiorna la selezione del servizio specifico
-    if (haircuts.some((haircut) => haircut.id === serviceId)) {
-      setSelectedHaircut(serviceId);
-    } else if (beardcuts.some((beardcut) => beardcut.id === serviceId)) {
-      setSelectedBeardcut(serviceId);
-    } else if (combos.some((combo) => combo.id === serviceId)) {
-      setSelectedCombo(serviceId);
-    }
-  };
 
   const fetchHaircuts = () => {
     fetch("http://localhost:3001/services", {
@@ -141,24 +111,6 @@ const ModifyAndDeleteModal = ({
     setSelectedCombo(null);
   };
 
-  //   const handleDelete = async () => {
-  //     try {
-  //       await dispatch(handleDeleteReservation(reservationData.id));
-  //       handleCancel();
-  //       Swal.fire({
-  //         position: "center",
-  //         icon: "success",
-  //         title: "Prenotazione eliminata!",
-  //         showConfirmButton: false,
-  //         timer: 2000,
-  //       });
-  //       dispatch(getReservations());
-  //     } catch (error) {
-  //       console.error("Errore durante l'eliminazione della prenotazione:", error);
-  //       // Aggiungi gestione degli errori se necessario
-  //     }
-  //   };
-
   return (
     <>
       <Modal backdrop="opaque" isOpen={isOpen} onClose={handleCancel}>
@@ -205,87 +157,22 @@ const ModifyAndDeleteModal = ({
               </p>
             )}
           </ModalHeader>
-          <ModalBody>
-            <Form>
-              <Row>
-                <Accordion variant="light">
-                  {/* Taglio Capelli */}
-                  <AccordionItem
-                    key="1"
-                    aria-label="Taglio Capelli"
-                    title="Taglio Capelli"
-                  >
-                    {haircuts.map((haircut) => (
-                      <div key={haircut.id}>
-                        <input
-                          type="checkbox"
-                          id={`haircut-${haircut.id}`}
-                          name={`haircut-${haircut.id}`}
-                          checked={selectedHaircut === haircut.id}
-                          onChange={() => handleCheckboxChange(haircut.id)}
-                        />
-                        {`${haircut.name} - ${haircut.price}€ - ${haircut.description}`}
-                      </div>
-                    ))}
-                  </AccordionItem>
-                  {/* Taglio Barba */}
-                  <AccordionItem
-                    key="2"
-                    aria-label="Taglio Barba"
-                    title="Taglio Barba"
-                  >
-                    {beardcuts.map((beardcut) => (
-                      <div key={beardcut.id}>
-                        <input
-                          type="checkbox"
-                          id={`beardcut-${beardcut.id}`}
-                          name={`beardcut-${beardcut.id}`}
-                          checked={selectedBeardcut === beardcut.id}
-                          onChange={() => handleCheckboxChange(beardcut.id)}
-                        />
-                        {`${beardcut.name} - ${beardcut.price}€ - ${beardcut.description}`}
-                      </div>
-                    ))}
-                  </AccordionItem>
-
-                  {/* Combo */}
-                  <AccordionItem key="3" aria-label="Combo" title="Combo">
-                    {combos.map((combo) => (
-                      <div key={combo.id}>
-                        <input
-                          type="checkbox"
-                          id={`combo-${combo.id}`}
-                          name={`combo-${combo.id}`}
-                          checked={selectedCombo === combo.id}
-                          onChange={() => handleCheckboxChange(combo.id)}
-                        />
-                        {`${combo.name} - ${combo.price}€ - ${combo.description}`}
-                      </div>
-                    ))}
-                  </AccordionItem>
-                </Accordion>
-              </Row>
-            </Form>
-          </ModalBody>
           <ModalFooter>
             <Button color="danger" variant="light" onClick={handleCancel}>
               Annulla
             </Button>
             {reservationData && (
               <>
-                <Button color="danger" onClick={"handleDelete"}>
-                  Elimina
-                </Button>
                 <Button
-                  color="primary"
-                  disabled={!selectedHaircut && !selectedBeardcut}
+                  color="danger"
                   onClick={async () => {
                     try {
                       await dispatch(
-                        handleSingleReservation(
-                          formattedDate,
+                        deleteSingleReservation(
+                          reservationData,
                           selectedHaircut,
                           selectedBeardcut,
+                          selectedCombo,
                           userId
                         )
                       );
@@ -293,7 +180,7 @@ const ModifyAndDeleteModal = ({
                       Swal.fire({
                         position: "center",
                         icon: "success",
-                        title: "Prenotazione modificata!",
+                        title: "Prenotazione eliminata!",
                         showConfirmButton: false,
                         timer: 2000,
                       });
@@ -303,11 +190,10 @@ const ModifyAndDeleteModal = ({
                         "Errore durante la modifica della prenotazione:",
                         error
                       );
-                      // Aggiungi gestione degli errori se necessario
                     }
                   }}
                 >
-                  Modifica
+                  Elimina
                 </Button>
               </>
             )}
