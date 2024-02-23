@@ -11,6 +11,7 @@ import {
   Avatar,
 } from "@nextui-org/react";
 import { useSelector } from "react-redux";
+import AvatarDropdown from "./MyPage/AvatarDropdown";
 
 const Mynavbar = () => {
   const meDataFromReduxStore = useSelector((state) => state.me.userData);
@@ -45,19 +46,22 @@ const Mynavbar = () => {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
-          <Link href="/login">Login</Link>
+          {isUserLoggedIn ? null : <Link href="/login">Login</Link>}
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color="primary" href="/register" variant="flat">
-            Registrati
-          </Button>
+          {isUserLoggedIn ? null : (
+            <Button as={Link} color="primary" href="/register" variant="flat">
+              Registrati
+            </Button>
+          )}
         </NavbarItem>
-        {isUserLoggedIn && ( // Mostra il componente User solo se l'utente è loggato
+        {isUserLoggedIn && (
           <>
             <NavbarItem>
-              <Avatar src={meDataFromReduxStore.avatar} />
+              <AvatarDropdown
+                meDataFromReduxStore={meDataFromReduxStore}
+              ></AvatarDropdown>{" "}
             </NavbarItem>
-            <NavbarItem>{meDataFromReduxStore.name}</NavbarItem>
           </>
         )}
       </NavbarContent>
