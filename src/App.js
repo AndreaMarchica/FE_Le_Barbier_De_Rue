@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { getMeDataAction, loginAction } from "./redux/actions";
 import MyFooter from "./components/MyFooter";
 import MyPage from "./components/MyPage/MyPage";
+import ContactsPage from "./components/ContactsPage/ContactsPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function App() {
         <Route element={<Login></Login>} path="/login"></Route>
         <Route element={<Register></Register>} path="/register"></Route>
         <Route element={<MyPage></MyPage>} path="/me"></Route>
+        <Route element={<ContactsPage></ContactsPage>} path="/contatti"></Route>
         <Route
           element={<Reservations></Reservations>}
           path="/prenotazioni"
