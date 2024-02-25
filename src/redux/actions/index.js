@@ -4,6 +4,7 @@ export const LOGOUT = "LOGOUT";
 export const GET_RESERVATIONS = "GET_RESERVATIONS";
 export const POST_RESERVATION = "POST_RESERVATION";
 export const DELETE_RESERVATION = "DELETE_RESERVATION";
+export const GET_CUSTOMERS = "GET_CUSTOMERS";
 
 export const getMeDataAction = () => {
   const token = localStorage.getItem("token");
@@ -144,5 +145,33 @@ export const deleteSingleReservation = (reservationData) => {
     } catch (err) {
       console.error("Errore", err);
     }
+  };
+};
+export const getCustomers = () => {
+  const token = localStorage.getItem("token");
+  return async (dispatch) => {
+    fetch("http://localhost:3001/users", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Errore nel recupero degli utenti");
+        }
+      })
+      .then((customers) => {
+        console.log("Clienti dal db", customers);
+        dispatch({
+          type: GET_CUSTOMERS,
+          payload: customers,
+        });
+      })
+      .catch((err) => {
+        console.log("errore", err);
+      });
   };
 };

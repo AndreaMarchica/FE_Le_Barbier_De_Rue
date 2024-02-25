@@ -119,31 +119,28 @@ const ModifyAndDeleteModal = ({
             {selectedDate && moment(selectedDate).format("LLLL")}
             <p>
               <b>Prenotato da:</b>{" "}
-              <Popover placement="bottom">
-                <PopoverTrigger>
-                  {reservationData.user.name +
-                    " " +
-                    reservationData.user.surname}
-                </PopoverTrigger>
-                <PopoverContent>
-                  <div className="px-1 py-2 flex flex-col align-items-center ">
-                    <div>
-                      <img
-                        src={reservationData.user.avatar}
-                        alt="avatar"
-                        className="text-center rounded-circle"
-                      />
-                    </div>
-                    <div className="text-small font-bold">
-                      {reservationData.user.phoneNumber}
-                    </div>
-                    <div className="text-tiny">
-                      {reservationData.user.email}
-                    </div>
-                  </div>
-                </PopoverContent>
-              </Popover>
             </p>
+            <Popover placement="bottom">
+              <PopoverTrigger>
+                {reservationData.user.name + " " + reservationData.user.surname}
+              </PopoverTrigger>
+              <PopoverContent>
+                <div className="px-1 py-2 flex flex-col align-items-center ">
+                  <div>
+                    <img
+                      src={reservationData.user.avatar}
+                      alt="avatar"
+                      className="text-center rounded-circle"
+                    />
+                  </div>
+                  <div className="text-small font-bold">
+                    {reservationData.user.phoneNumber}
+                  </div>
+                  <div className="text-tiny">{reservationData.user.email}</div>
+                </div>
+              </PopoverContent>
+            </Popover>
+
             {reservationData && (
               <p>
                 <b>Servizio prenotato:</b>{" "}
