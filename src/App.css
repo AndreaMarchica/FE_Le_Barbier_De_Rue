@@ -1,10 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&family=Young+Serif&display=swap");
 /* body {
   background-image: url("./assets/LBDRLogo.png");
   background-repeat: repeat;
   background-size: cover;
   opacity: 0.8; 
 } */
-
 .active {
   font-weight: bold;
 }
@@ -19,10 +19,13 @@
   width: 90px;
   height: 90px;
   border-radius: 50%; /* Rende il div circolare */
-  background-color: #3498db; /* Colore di sfondo */
+  background-color: black; /* Colore di sfondo */
   color: #fff; /* Colore del testo */
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 18px;
+}
+.myfont {
+  font-family: Cabin;
 }

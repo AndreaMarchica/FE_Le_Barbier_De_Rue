@@ -16,6 +16,7 @@ import { createSingleReservation } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { getReservations } from "../../redux/actions";
+import { getCustomers } from "../../redux/actions";
 
 const ReservationModal = ({
   onClose,
@@ -33,15 +34,36 @@ const ReservationModal = ({
   const [selectedBeardcut, setSelectedBeardcut] = useState(null);
   const [selectedServices, setSelectedServices] = useState([]);
   const [selectedServiceType, setSelectedServiceType] = useState(null);
-
+  const isAdmin = useSelector((state) => state.me.userData.role === "ADMIN");
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [customerList, setCustomerList] = useState([]);
+  const [filteredCustomerList, setFilteredCustomerList] = useState([]);
   const userId = useSelector((state) => state.me.userData.id);
+  const customersFromRedux = useSelector((state) => state.customers.customers);
   const dispatch = useDispatch();
-  // const postPayload = {
-  //   reservationDate: selectedDate,
-  //   haircutType: selectedHaircut,
-  //   beardcutType: selectedHaircut,
-  //   userId: userId,
-  // };
+  useEffect(() => {
+    if (isAdmin) {
+      // Fetch della lista dei clienti solo se l'utente è un admin
+      fetchCustomerList();
+    }
+  }, [isAdmin]);
+
+  const fetchCustomerList = () => {
+    dispatch(getCustomers())
+      .then(() => {
+        setCustomerList(customersFromRedux);
+        console.log(customerList);
+      })
+      .catch((error) => {
+        console.error("Errore durante il recupero della lista clienti:", error);
+      });
+  };
+  useEffect(() => {
+    console.log("customerList:", customerList);
+    if (customerList) {
+      setFilteredCustomerList(customerList);
+    }
+  }, [customerList]);
 
   useEffect(() => {
     if (isOpen) {
@@ -148,6 +170,56 @@ const ReservationModal = ({
             <Form>
               <Row>
                 <Accordion variant="light">
+                  {" "}
+                  {isAdmin && (
+                    <AccordionItem
+                      key="admin-accordion"
+                      aria-label="Selezione Cliente"
+                      title="Selezione Cliente"
+                    >
+                      {/* Searchbar per la selezione del cliente */}
+                      <Form.Group controlId="formCustomerSearch">
+                        <Form.Control
+                          type="text"
+                          placeholder="Cerca cliente..."
+                          onChange={(e) => {
+                            // Implementa la logica per filtrare la lista dei clienti in base all'input della searchbar
+                            const searchTerm = e.target.value.toLowerCase();
+                            const filteredCustomers = customerList.filter(
+                              (customer) =>
+                                customer.name
+                                  .toLowerCase()
+                                  .includes(searchTerm) ||
+                                customer.surname
+                                  .toLowerCase()
+                                  .includes(searchTerm)
+                            );
+                            // Aggiorna lo stato con la lista filtrata
+                            setFilteredCustomerList(filteredCustomers);
+                          }}
+                        />
+                      </Form.Group>
+
+                      {/* Lista dei clienti */}
+                      {filteredCustomerList.map((customer) => (
+                        <div key={customer.id}>
+                          <input
+                            type="radio"
+                            id={`customer-${customer.id}`}
+                            name="customer"
+                            checked={selectedCustomer === customer.id}
+                            onChange={() => {
+                              // Aggiorna lo stato quando viene selezionato un cliente
+                              setSelectedCustomer(customer.id);
+                            }}
+                          />
+                          <label htmlFor={`customer-${customer.id}`}>
+                            {`${customer.name} ${customer.surname}`}
+                          </label>
+                        </div>
+                      ))}
+                    </AccordionItem>
+                  )}
                   {/* Taglio Capelli */}
                   <AccordionItem
                     key="1"
@@ -212,7 +284,6 @@ const ReservationModal = ({
                       </div>
                     ))}
                   </AccordionItem>
-
                   {/* Combo */}
                   <AccordionItem
                     key="3"
