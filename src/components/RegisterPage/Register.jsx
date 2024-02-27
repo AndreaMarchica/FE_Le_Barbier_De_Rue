@@ -1,9 +1,9 @@
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
-import { useDispatch } from "react-redux";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -13,41 +13,80 @@ const Register = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const [isVisible, setIsVisible] = useState(false);
+  const [isRecaptchaVerified, setIsRecaptchaVerified] = useState(false);
+
+  useEffect(() => {
+    const allFieldsFilled =
+      email !== "" &&
+      name !== "" &&
+      surname !== "" &&
+      dateOfBirth !== "" &&
+      phoneNumber !== "" &&
+      username !== "" &&
+      password !== "" &&
+      isRecaptchaVerified;
+
+    // Imposta lo stato di verifica di Recaptcha
+    setIsRecaptchaVerified(allFieldsFilled);
+  }, [
+    email,
+    name,
+    surname,
+    dateOfBirth,
+    phoneNumber,
+    username,
+    password,
+    isRecaptchaVerified,
+  ]);
+
   const toggleVisibility = () => setIsVisible(!isVisible);
-  const api = "http://localhost:3001/auth/register";
-  const dispatch = useDispatch();
 
   const register = () => {
-    fetch(api, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        surname,
-        dateOfBirth,
-        username,
-        email,
-        password,
-        phoneNumber,
-      }),
-    })
-      .then((res) => {
-        console.log(res);
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error("Errore nel caricamento dati");
-        }
+    if (
+      email !== "" &&
+      name !== "" &&
+      surname !== "" &&
+      dateOfBirth !== "" &&
+      phoneNumber !== "" &&
+      username !== "" &&
+      password !== "" &&
+      isRecaptchaVerified
+    ) {
+      const api = "http://localhost:3001/auth/register";
+      fetch(api, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          name,
+          surname,
+          dateOfBirth,
+          phoneNumber,
+          username,
+          password,
+        }),
       })
-      .then((data) => {
-        console.log("Registarzione avvenuta con successo:", data);
-      })
-      .catch((err) => {
-        console.log("Errore durante la registrazione:", err);
-      });
+        .then((res) => {
+          console.log("Risposta dal server:", res);
+          if (res.ok) {
+            return res.json();
+          } else {
+            throw new Error("Errore nel caricamento dati");
+          }
+        })
+        .then((data) => {
+          console.log("Registrazione avvenuta con successo:", data);
+        })
+        .catch((err) => {
+          console.log("Errore durante la registrazione:", err);
+        });
+    } else {
+      console.log("Compila tutti i campi e verifica Recaptcha.");
+    }
   };
 
   return (
@@ -181,8 +220,20 @@ const Register = () => {
               </div>
             </div>
           </Col>
+          <div className="flex gap-4 items-center pt-2">
+            {" "}
+            <ReCAPTCHA
+              sitekey={process.env.REACT_APP_SITE_KEY}
+              onChange={(value) => setIsRecaptchaVerified(!!value)}
+            />
+          </div>
           <div className="flex gap-4 items-center">
-            <Button className="mt-3" size="md" onClick={register}>
+            <Button
+              className="mt-2"
+              size="md"
+              onClick={register}
+              disabled={!isRecaptchaVerified}
+            >
               Registrati
             </Button>
           </div>

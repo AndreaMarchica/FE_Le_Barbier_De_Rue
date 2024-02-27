@@ -6,6 +6,8 @@ import MailLogo from "../../assets/Mail Icon - 480x480.png";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 const ContactsPage = () => {
+  const googleMapsApiKey = process.env.REACT_APP_MY_APIKEY;
+
   const mapStyles = {
     height: "400px",
     width: "100%",
@@ -41,7 +43,7 @@ const ContactsPage = () => {
           <p className="fs-2 text-center pt-2">Vieni a trovarci</p>
           <p>Siamo a Savona in Via degli Orefici 36R</p>
 
-          <LoadScript googleMapsApiKey="AIzaSyDNgB51iadk0cdN6cf00bXeko-HZt5ycSE">
+          <LoadScript googleMapsApiKey={googleMapsApiKey}>
             <GoogleMap
               mapContainerStyle={mapStyles}
               zoom={16}

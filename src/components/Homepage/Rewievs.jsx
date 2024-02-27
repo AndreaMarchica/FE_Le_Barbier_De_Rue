@@ -5,9 +5,10 @@ const libraries = ["places"]; // IMPORTING 'PLACES' LIBRARY FROM GOOGLE MAPS
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
+  const googleMapsApiKey = process.env.REACT_APP_MY_APIKEY;
   const { isLoaded, loadError } = useLoadScript({
     // TO GET API KEY VISIT: https://developers.google.com/maps/documentation/javascript/get-api-key
-    googleMapsApiKey: "AIzaSyDNgB51iadk0cdN6cf00bXeko-HZt5ycSE", // PUT YOUR API KEY OF PROJECT CREATED IN GOOGLE CLOUD CONSOLE
+    googleMapsApiKey: googleMapsApiKey, // PUT YOUR API KEY OF PROJECT CREATED IN GOOGLE CLOUD CONSOLE
     libraries,
   });
 
