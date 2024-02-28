@@ -29,3 +29,11 @@
 .myfont {
   font-family: Cabin;
 }
+.video-width {
+  width: 100%;
+}
+.hero-video {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}

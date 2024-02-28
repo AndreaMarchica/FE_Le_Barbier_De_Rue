@@ -6,7 +6,7 @@ import {
   FooterLink,
   FooterLinkGroup,
 } from "flowbite-react";
-import Logo from "../assets/LBDRLogo.png";
+import Logo from "../assets/LogoSVG1-cropped.svg";
 
 const MyFooter = () => {
   return (

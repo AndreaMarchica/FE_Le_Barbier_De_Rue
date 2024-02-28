@@ -1,3 +1,4 @@
+import "./reset.css";
 import "./App.css";
 import Homepage from "./components/Homepage/Homepage";
 import Mynavbar from "./components/MyNavbar";
