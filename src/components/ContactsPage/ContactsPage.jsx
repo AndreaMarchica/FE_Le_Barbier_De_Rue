@@ -18,30 +18,38 @@ const ContactsPage = () => {
     lng: 8.48418,
   };
   return (
-    <Container>
+    <Container className="myfont">
       <Row>
         <Col className="col-12 align-items-center justify-content-center">
-          <p className="fs-2 text-center">Contatta Le Barbier de Rue</p>
+          <p className="fs-2 text-center pt-3">Contatta Le Barbier de Rue</p>
         </Col>
         <Col className="text-center">
           <img src={IgLogo} alt="IG logo" />
-          <p>Instagram: @lebarbierderue</p>
+          <p className="fs-4">
+            Instagram:<br></br> @lebarbierderue
+          </p>
         </Col>
         <Col className="text-center">
           <img src={WaLogo} alt="WA logo" />
-          <p>Whatsapp: +39 342 801 5802</p>
+          <p className="fs-4">
+            Whatsapp:<br></br> +39 342 801 5802
+          </p>
         </Col>
         <Col className="text-center">
           <img src={PhoneLogo} alt="Phone logo" />
-          <p>Telefono: 019 221 7289</p>
+          <p className="fs-4">
+            Telefono:<br></br> 019 221 7289
+          </p>
         </Col>
         <Col className="text-center">
           <img src={MailLogo} alt="Mail logo" />
-          <p>Email: lebarbierderue@gmail.com</p>
+          <p className="fs-4">
+            Email:<br></br> lebarbierderue@gmail.com
+          </p>
         </Col>
         <Col className="col-12 flex flex-col justify-content-center align-items-center">
-          <p className="fs-2 text-center pt-2">Vieni a trovarci</p>
-          <p>Siamo a Savona in Via degli Orefici 36R</p>
+          <p className="fs-2 text-center pt-4">Vieni a trovarci</p>
+          <p className="fs-4">Siamo a Savona in Via degli Orefici 36R</p>
 
           <LoadScript googleMapsApiKey={googleMapsApiKey}>
             <GoogleMap

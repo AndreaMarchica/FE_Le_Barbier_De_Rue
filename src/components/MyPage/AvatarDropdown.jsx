@@ -4,12 +4,11 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  User,
 } from "@nextui-org/react";
 
 const AvatarDropdown = ({ meDataFromReduxStore }) => {
   return (
-    <Dropdown placement="bottom-start">
+    <Dropdown placement="bottom-start" className="myfont">
       <DropdownTrigger>
         {/* <User
           as="button"

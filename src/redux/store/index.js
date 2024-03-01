@@ -4,6 +4,7 @@ import authReducer from "../reducers/authReducer";
 import reservationsReducer from "../reducers/ReservationsReducer";
 import { handleReservationsReducer } from "../reducers/handleReservationsReducer.js";
 import customerReducer from "../reducers/customerReducer.js";
+import serviceReducer from "../reducers/serviceReducer.js";
 
 const bigReducer = combineReducers({
   me: meReducer,
@@ -11,6 +12,7 @@ const bigReducer = combineReducers({
   reservations: reservationsReducer,
   //singleReservation: handleReservationsReducer,
   customers: customerReducer,
+  serviceReducer: serviceReducer,
 });
 
 const store = configureStore({

@@ -3,6 +3,7 @@ import MyCarousel from "./MyCarousel";
 import Locale from "../../assets/herolocale.mp4";
 import Reviews from "./Rewievs";
 import { useEffect, useState } from "react";
+import { InstagramEmbed } from "react-social-media-embed";
 
 const Homepage = () => {
   const [videoOpacity, setVideoOpacity] = useState(0);
@@ -67,10 +68,18 @@ const Homepage = () => {
             </div>
           </Col>
           <Col>
-            <MyCarousel></MyCarousel>
+            <h3 className="text-center py-3">
+              Scopri i nostri look su Instagram
+            </h3>
+            <div className="d-flex justify-center">
+              <InstagramEmbed
+                url="https://www.instagram.com/lebarbierderue"
+                width={800}
+              />
+            </div>
           </Col>
           <Col className="col-12 myfont">
-            <h3 className="pb-2">La storia</h3>
+            <h3 className="py-3 text-center pt-5">La storia</h3>
             <p>
               Nel cuore di Savona, tra le strade che raccontano storie e
               tradizioni, sorge LE BARBIER DE RUE, il rifugio della bellezza
@@ -128,7 +137,7 @@ const Homepage = () => {
             </p>
           </Col>
           <Col>
-            <h3>Dicono di noi</h3>
+            <h3 className="py-3 text-center pt-5">Dicono di noi</h3>
             <Reviews></Reviews>
           </Col>
         </Row>

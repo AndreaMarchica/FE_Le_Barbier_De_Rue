@@ -161,7 +161,12 @@ const ReservationModal = ({
 
   return (
     <>
-      <Modal backdrop="opaque" isOpen={isOpen} onClose={handleCancel}>
+      <Modal
+        backdrop="opaque"
+        isOpen={isOpen}
+        onClose={handleCancel}
+        className="myfont"
+      >
         <ModalContent>
           <ModalHeader className="flex flex-col gap-1">
             {selectedDate && moment(selectedDate).format("LLLL")}

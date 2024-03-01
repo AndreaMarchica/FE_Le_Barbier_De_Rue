@@ -11,7 +11,7 @@ import Logo from "../assets/LogoSVG1-cropped.svg";
 const MyFooter = () => {
   return (
     <Footer container>
-      <div className="w-full text-center">
+      <div className="w-full text-center myfont">
         <div className="w-full justify-between sm:flex sm:items-center sm:justify-between">
           <FooterBrand src={Logo} alt="Logo" />
           <FooterLinkGroup>

@@ -5,6 +5,7 @@ export const GET_RESERVATIONS = "GET_RESERVATIONS";
 export const POST_RESERVATION = "POST_RESERVATION";
 export const DELETE_RESERVATION = "DELETE_RESERVATION";
 export const GET_CUSTOMERS = "GET_CUSTOMERS";
+export const GET_SERVICES = "GET_SERVICES";
 
 export const getMeDataAction = () => {
   const token = localStorage.getItem("token");
@@ -168,6 +169,34 @@ export const getCustomers = () => {
         dispatch({
           type: GET_CUSTOMERS,
           payload: customers,
+        });
+      })
+      .catch((err) => {
+        console.log("errore", err);
+      });
+  };
+};
+export const getServices = () => {
+  const token = localStorage.getItem("token");
+  return async (dispatch) => {
+    fetch("http://localhost:3001/services", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Errore nel recupero dei servizi");
+        }
+      })
+      .then((services) => {
+        console.log("Servizi dal db", services);
+        dispatch({
+          type: GET_SERVICES,
+          payload: services,
         });
       })
       .catch((err) => {

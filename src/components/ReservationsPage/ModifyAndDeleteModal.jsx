@@ -113,12 +113,18 @@ const ModifyAndDeleteModal = ({
 
   return (
     <>
-      <Modal backdrop="opaque" isOpen={isOpen} onClose={handleCancel}>
+      <Modal
+        backdrop="opaque"
+        isOpen={isOpen}
+        onClose={handleCancel}
+        className="myfont"
+      >
         <ModalContent>
           <ModalHeader className="flex flex-col gap-1">
             {selectedDate && moment(selectedDate).format("LLLL")}
-            <p>
-              <b>Prenotato da:</b>{" "}
+            <p className="pt-3">
+              <b>Prenotato da:</b>
+              <br />{" "}
               <Popover placement="bottom">
                 <PopoverTrigger>
                   {reservationData.user.name +
@@ -126,7 +132,7 @@ const ModifyAndDeleteModal = ({
                     reservationData.user.surname}
                 </PopoverTrigger>
                 <PopoverContent>
-                  <div className="px-1 py-2 flex flex-col align-items-center ">
+                  <div className="px-1 py-2 flex flex-col align-items-center myfont">
                     <div>
                       <img
                         src={reservationData.user.avatar}
@@ -146,7 +152,8 @@ const ModifyAndDeleteModal = ({
             </p>
             {reservationData && (
               <p>
-                <b>Servizio prenotato:</b>{" "}
+                <b>Servizio prenotato:</b>
+                <br></br>{" "}
                 {reservationData.haircutId
                   ? getServiceName(reservationData.haircutId, haircuts)
                   : reservationData.beardcutId

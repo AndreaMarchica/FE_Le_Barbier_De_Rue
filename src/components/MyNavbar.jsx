@@ -23,7 +23,7 @@ const Mynavbar = () => {
 
   return (
     <>
-      <Navbar className="drop-shadow-xl pt-2">
+      <Navbar className="drop-shadow-xl pt-2 myfont">
         <NavbarBrand>
           <div className="max-w-xxs mx-auto">
             <img

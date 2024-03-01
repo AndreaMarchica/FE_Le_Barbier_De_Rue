@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Col, Row } from "react-bootstrap";
+import { CiStar } from "react-icons/ci";
 
 const libraries = ["places"]; // IMPORTING 'PLACES' LIBRARY FROM GOOGLE MAPS
 
@@ -43,42 +48,63 @@ const Reviews = () => {
     }
   }, [isLoaded, loadError]);
 
+  const settings = {
+    dots: false,
+    fade: true,
+    infinite: true,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    waitForAnimate: false,
+    cssEase: "linear",
+  };
+
   return (
-    <div>
-      {/* MAPPING REVIEWS TO DISPLAY EACH REVIEW IN A DIV ELEMENT */}
-      {reviews?.map((review) => (
-        <div key={review.id || review.time}>
-          <p>
-            <strong>NAME : </strong>
-            {review.author_name}
-          </p>
-          <p>
-            <strong>RATING : </strong>
-            {review.rating}
-          </p>
-          <p>
-            <strong>TEXT : </strong>
-            {review.text}
-          </p>
-          {/* USER PROFILE PHOTO */}
-          {review.profile_photo_url && (
-            <img
-              src={review.profile_photo_url}
-              alt={`${review.author_name}'s profile`}
-            />
-          )}
-          {/* PHOTOS ASSOCIATED WITH REVIEW */}
-          {review.photos &&
-            review.photos.map((photo, index) => (
-              <img
-                key={index}
-                src={photo.getUrl()}
-                alt={`Photo ${index + 1} for review by ${review.author_name}`}
-              />
-            ))}
-          <hr />
-        </div>
-      ))}
+    <div className="slider-container py-4">
+      <Slider {...settings}>
+        {reviews.map((review) => (
+          <div key={review.id || review.time}>
+            <Row>
+              <Col className="col-2 justify-center align-middle">
+                {/* USER PROFILE PHOTO */}
+                {review.profile_photo_url && (
+                  <img
+                    src={review.profile_photo_url}
+                    alt={`${review.author_name}'s profile`}
+                  />
+                )}
+              </Col>
+              <Col className="col-10">
+                <p>{review.author_name}</p>
+                <p>
+                  <div className="d-flex flex-row">
+                    {Array.from({ length: Math.floor(review.rating) }).map(
+                      (_, index) => (
+                        <CiStar key={index} />
+                      )
+                    )}{" "}
+                  </div>
+                </p>
+                <p>{review.text}</p>
+
+                {/* PHOTOS ASSOCIATED WITH REVIEW */}
+                {review.photos &&
+                  review.photos.map((photo, index) => (
+                    <img
+                      key={index}
+                      src={photo.getUrl()}
+                      alt={`Uploaded photos ${index + 1} for review by ${
+                        review.author_name
+                      }`}
+                    />
+                  ))}
+              </Col>
+            </Row>
+          </div>
+        ))}
+      </Slider>
     </div>
   );
 };
