@@ -54,7 +54,7 @@ const ContactsPage = () => {
           <LoadScript googleMapsApiKey={googleMapsApiKey}>
             <GoogleMap
               mapContainerStyle={mapStyles}
-              zoom={16}
+              zoom={17}
               center={defaultCenter}
             >
               <Marker position={defaultCenter} />

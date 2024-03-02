@@ -1,6 +1,5 @@
 import React from "react";
 import Logo from "../assets/LogoSVG1-cropped.svg";
-import Logo1 from "../assets/LogoSVG1.png";
 import {
   Navbar,
   NavbarBrand,
@@ -8,8 +7,6 @@ import {
   NavbarItem,
   Link,
   Button,
-  User,
-  Avatar,
 } from "@nextui-org/react";
 import { useSelector } from "react-redux";
 import AvatarDropdown from "./MyPage/AvatarDropdown";
