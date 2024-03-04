@@ -125,32 +125,42 @@ const MyPage = () => {
                 <p>
                   <b>LE MIE PRENOTAZIONI</b>
                 </p>
-                {filteredReservations.map((reservation) => (
+                {filteredReservations.map((reservation, index) => (
                   <div
                     key={reservation.id}
-                    className="d-flex flex-row align-items-center p-2"
+                    className={`d-flex flex-row align-items-center rounded p-2 ${
+                      index % 2 === 0 ? "even" : "odd"
+                    }`}
                   >
-                    <img src={Calendar} alt="calendario" className="my-icon" />
-                    <p className="m-0 ms-3">
-                      {format(
-                        new Date(reservation.reservationDate),
-                        "EEEE dd/MM/yyyy 'alle ore' HH:mm",
-                        { locale: italianLocale }
-                      )}
-                    </p>{" "}
-                    <img
-                      src={Sedia}
-                      alt="calendario"
-                      className="my-icon ms-5"
-                    />
-                    <p className="m-0 ms-3">
-                      {getServiceName(
-                        reservation.haircutId ||
-                          reservation.comboId ||
-                          reservation.beardcutId,
-                        services
-                      )}
-                    </p>
+                    <Col className="col-5 d-flex">
+                      <img
+                        src={Calendar}
+                        alt="calendario"
+                        className="my-icon"
+                      />
+                      <p className="m-0 ms-3">
+                        {format(
+                          new Date(reservation.reservationDate),
+                          "EEEE dd/MM/yyyy 'alle ore' HH:mm",
+                          { locale: italianLocale }
+                        )}
+                      </p>{" "}
+                    </Col>
+                    <Col className="col-5 d-flex">
+                      <img
+                        src={Sedia}
+                        alt="calendario"
+                        className="my-icon ms-5"
+                      />
+                      <p className="m-0 ms-3">
+                        {getServiceName(
+                          reservation.haircutId ||
+                            reservation.comboId ||
+                            reservation.beardcutId,
+                          services
+                        )}
+                      </p>
+                    </Col>
                     <div className="ms-auto">
                       <Button
                         color="danger"

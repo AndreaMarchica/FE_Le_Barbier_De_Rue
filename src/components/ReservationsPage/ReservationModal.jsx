@@ -40,6 +40,8 @@ const ReservationModal = ({
   const [filteredCustomerList, setFilteredCustomerList] = useState([]);
   const userId = useSelector((state) => state.me.userData.id);
   const customersFromRedux = useSelector((state) => state.customers.customers);
+  const [accordionIndex, setAccordionIndex] = useState(null);
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (isAdmin) {
@@ -174,7 +176,11 @@ const ReservationModal = ({
           <ModalBody>
             <Form>
               <Row>
-                <Accordion variant="light">
+                <Accordion
+                  variant="light"
+                  activeKey={accordionIndex}
+                  onSelect={(index) => setAccordionIndex(index)}
+                >
                   {" "}
                   {isAdmin && (
                     <AccordionItem
@@ -232,28 +238,40 @@ const ReservationModal = ({
                     title="Taglio Capelli"
                     onClick={() => setSelectedServiceType("haircut")}
                   >
-                    {haircuts.map((haircut) => (
-                      <div key={haircut.id}>
-                        <input
-                          type="checkbox"
-                          id={`haircut-${haircut.id}`}
-                          name={`haircut-${haircut.id}`}
-                          checked={
-                            selectedServices.includes(haircut.id) &&
-                            selectedServiceType === "haircut"
-                          }
-                          onChange={() => {
-                            const serviceId = haircut.id; // Usa l'ID del servizio
-                            setSelectedServiceType("haircut");
-                            setSelectedServices([serviceId]);
-                            setSelectedHaircut(serviceId);
-                            setSelectedBeardcut(null); // Resetta il taglio barba
-                            setSelectedCombo(null); // Resetta il combo
-                          }}
-                        />
-                        <label htmlFor={`haircut-${haircut.id}`}>
-                          {`${haircut.name} - ${haircut.price}€ - ${haircut.description}`}
-                        </label>
+                    {haircuts.map((haircut, index) => (
+                      <div
+                        key={haircut.id}
+                        className={`d-flex flex-column rounded p-2 ${
+                          index % 2 === 0 ? "even" : "odd"
+                        }`}
+                      >
+                        {" "}
+                        <div className="d-flex">
+                          <input
+                            type="checkbox"
+                            id={`haircut-${haircut.id}`}
+                            name={`haircut-${haircut.id}`}
+                            checked={
+                              selectedServices.includes(haircut.id) &&
+                              selectedServiceType === "haircut"
+                            }
+                            onChange={() => {
+                              const serviceId = haircut.id; // Usa l'ID del servizio
+                              setSelectedServiceType("haircut");
+                              setSelectedServices([serviceId]);
+                              setSelectedHaircut(serviceId);
+                              setSelectedBeardcut(null); // Resetta il taglio barba
+                              setSelectedCombo(null); // Resetta il combo
+                            }}
+                          />
+                          <label
+                            className="ms-2"
+                            htmlFor={`haircut-${haircut.id}`}
+                          >
+                            <b>{`${haircut.name} - ${haircut.price}€`}</b>
+                          </label>
+                        </div>
+                        <p>{haircut.description}</p>
                       </div>
                     ))}
                   </AccordionItem>
@@ -264,28 +282,40 @@ const ReservationModal = ({
                     title="Taglio Barba"
                     onClick={() => setSelectedServiceType("beardcut")}
                   >
-                    {beardcuts.map((beardcut) => (
-                      <div key={beardcut.id}>
-                        <input
-                          type="checkbox"
-                          id={`beardcut-${beardcut.id}`}
-                          name={`beardcut-${beardcut.id}`}
-                          checked={
-                            selectedServices.includes(beardcut.id) &&
-                            selectedServiceType === "beardcut"
-                          }
-                          onChange={() => {
-                            const serviceId = beardcut.id; // Usa l'ID del servizio
-                            setSelectedServiceType("beardcut");
-                            setSelectedServices([serviceId]);
-                            setSelectedHaircut(null); // Resetta il taglio capelli
-                            setSelectedBeardcut(serviceId);
-                            setSelectedCombo(null); // Resetta il combo
-                          }}
-                        />
-                        <label htmlFor={`beardcut-${beardcut.id}`}>
-                          {`${beardcut.name} - ${beardcut.price}€ - ${beardcut.description}`}
-                        </label>
+                    {beardcuts.map((beardcut, index) => (
+                      <div
+                        key={beardcut.id}
+                        className={`d-flex flex-column rounded p-2 ${
+                          index % 2 === 0 ? "even" : "odd"
+                        }`}
+                      >
+                        {" "}
+                        <div className="d-flex">
+                          <input
+                            type="checkbox"
+                            id={`beardcut-${beardcut.id}`}
+                            name={`beardcut-${beardcut.id}`}
+                            checked={
+                              selectedServices.includes(beardcut.id) &&
+                              selectedServiceType === "beardcut"
+                            }
+                            onChange={() => {
+                              const serviceId = beardcut.id; // Usa l'ID del servizio
+                              setSelectedServiceType("beardcut");
+                              setSelectedServices([serviceId]);
+                              setSelectedHaircut(null); // Resetta il taglio capelli
+                              setSelectedBeardcut(serviceId);
+                              setSelectedCombo(null); // Resetta il combo
+                            }}
+                          />
+                          <label
+                            className="ms-2"
+                            htmlFor={`beardcut-${beardcut.id}`}
+                          >
+                            <b>{`${beardcut.name} - ${beardcut.price}€`}</b>
+                          </label>{" "}
+                        </div>
+                        <p>{beardcut.description}</p>
                       </div>
                     ))}
                   </AccordionItem>
@@ -296,28 +326,36 @@ const ReservationModal = ({
                     title="Combo"
                     onClick={() => setSelectedServiceType("combo")}
                   >
-                    {combos.map((combo) => (
-                      <div key={combo.id}>
-                        <input
-                          type="checkbox"
-                          id={`combo-${combo.id}`}
-                          name={`combo-${combo.id}`}
-                          checked={
-                            selectedServices.includes(combo.id) &&
-                            selectedServiceType === "combo"
-                          }
-                          onChange={() => {
-                            const serviceId = combo.id; // Usa l'ID del servizio
-                            setSelectedServiceType("combo");
-                            setSelectedServices([serviceId]);
-                            setSelectedHaircut(null); // Resetta il taglio capelli
-                            setSelectedBeardcut(null); // Resetta il taglio barba
-                            setSelectedCombo(serviceId); // Deselect haircuts and beardcuts when selecting combo
-                          }}
-                        />
-                        <label htmlFor={`combo-${combo.id}`}>
-                          {`${combo.name} - ${combo.price}€ - ${combo.description}`}
-                        </label>
+                    {combos.map((combo, index) => (
+                      <div
+                        key={combo.id}
+                        className={`d-flex flex-column rounded p-2 ${
+                          index % 2 === 0 ? "even" : "odd"
+                        }`}
+                      >
+                        <div className="d-flex">
+                          <input
+                            type="checkbox"
+                            id={`combo-${combo.id}`}
+                            name={`combo-${combo.id}`}
+                            checked={
+                              selectedServices.includes(combo.id) &&
+                              selectedServiceType === "combo"
+                            }
+                            onChange={() => {
+                              const serviceId = combo.id; // Usa l'ID del servizio
+                              setSelectedServiceType("combo");
+                              setSelectedServices([serviceId]);
+                              setSelectedHaircut(null); // Resetta il taglio capelli
+                              setSelectedBeardcut(null); // Resetta il taglio barba
+                              setSelectedCombo(serviceId); // Deselect haircuts and beardcuts when selecting combo
+                            }}
+                          />
+                          <label className="ms-2" htmlFor={`combo-${combo.id}`}>
+                            <b>{`${combo.name} - ${combo.price}€`}</b>
+                          </label>
+                        </div>
+                        <p>{combo.description}</p>
                       </div>
                     ))}
                   </AccordionItem>

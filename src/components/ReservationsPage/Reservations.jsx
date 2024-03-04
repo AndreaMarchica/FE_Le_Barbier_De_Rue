@@ -106,6 +106,15 @@ const Reservations = () => {
             click: handleCustomButtonClick,
           },
         }}
+        titleFormat={{
+          month: "long", // Utilizza il nome completo del mese
+          year: "numeric",
+        }}
+        dayHeaderFormat={{
+          weekday: "long", // Utilizza il nome completo del giorno della settimana
+          day: "numeric",
+          omitCommas: true, // Rimuove le virgole tra il giorno e il numero del mese
+        }}
         ref={calendarRef}
         initialView="timeGridWeek"
         editable={false} // Per abilitare la trascinabilità degli eventi, con false impedisce di allungare la durata

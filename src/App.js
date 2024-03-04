@@ -12,6 +12,7 @@ import { getMeDataAction, loginAction } from "./redux/actions";
 import MyFooter from "./components/MyFooter";
 import MyPage from "./components/MyPage/MyPage";
 import ContactsPage from "./components/ContactsPage/ContactsPage";
+import ServicesPage from "./components/ServicesPage/ServicesPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,8 +38,9 @@ function App() {
           element={<Reservations></Reservations>}
           path="/prenotazioni"
         ></Route>
+        <Route element={<ServicesPage></ServicesPage>} path="/servizi"></Route>
       </Routes>
-      <MyFooter></MyFooter>
+      {window.location.pathname !== "/servizi" && <MyFooter />}
     </BrowserRouter>
   );
 }
