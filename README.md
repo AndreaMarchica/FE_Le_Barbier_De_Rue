@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+💈LE BARBIER DE RUE
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+💻 Web Application for Barber Shop Management
 
-## Available Scripts
+An online platform designed to provide salon clients with easy access to essential information. Clients can explore the store's operating hours and location, review the services offered, understand the pricing structure, and independently schedule and manage their appointments. Additionally, the platform facilitates the purchase of barber's product line.
 
-In the project directory, you can run:
+This application empowers barbers to enhance their visibility and efficiently manage reservations, services, products, and user interactions. It offers a comprehensive solution that includes a professional website, an appointment scheduling system, and an integrated management tool for services and products.
 
-### `npm start`
+⭐ Key Features:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# Client-Focused:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Access salon hours and location details.
+- Explore available services and associated pricing.
+- Schedule and manage appointments at their convenience.
+- Shop for barber's product line seamlessly.
 
-### `npm test`
+# Barber Empowerment:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Enhance business visibility through a dedicated website.
+- Manage reservations effortlessly.
+- Streamline service and product management.
+- Access an integrated system for appointments, services, and products.
 
-### `npm run build`
+This integrated solution ensures a seamless experience for both clients and barbers, fostering an efficient and professional salon management environment.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+🔧 Technologies
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+This project was developed using React and React-Redux for the frontend, Spring Boot with Maven as the backend framework, and PostgreSQL as the database. Postman was employed for testing purposes. Noteworthy features include:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Frontend Technologies:
 
-### `npm run eject`
+- React and React-Redux: Used for building a dynamic and responsive user interface.
+- NextUI, Flowbite, React-Bootstrap, Tailwind, React-Slick: Libraries utilized for creating a visually appealing and interactive frontend design.
+- SweetAlert2: Integrated for enhanced alerting functionality, providing a user-friendly notification experience.
+- React-Social-Media-Embed: Integrated to display social media content seamlessly.
+- React-Router-Dom: Implemented for smooth navigation within the application.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# Backend Technologies:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Spring Boot: Employed as the backend framework to handle server-side operations.
+- Maven: Utilized for project management and dependency resolution.
+- PostgreSQL: Chosen as the database management system for data storage.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Authentication and Security Measures:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Registration: Implemented reCaptcha for enhanced security during the registration process.
+- Authentication: Leveraged JWT (Json Web Token) with Bcrypt for secure user authentication.
+- LocalStorage: Utilized to store JWT tokens securely on the client side.
 
-## Learn More
+# Appointment Management:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- FullCalendar and Date-fns: Integrated for efficient scheduling and management of appointments.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Third-Party APIs:
 
-### Code Splitting
+- Google Maps APIs: Leveraged for fetching Google Business reviews and implementing a store locator map.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+# Additional Features:
 
-### Analyzing the Bundle Size
+- Chart.js: Used to visualize the Fidelity Card points on a graphical chart.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+# UI Libraries:
 
-### Making a Progressive Web App
+- NextUI, Flowbite, React-Bootstrap, Tailwind, React-Slick: Employed for creating a cohesive and visually appealing frontend design.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+⚙️ Installation Instructions
 
-### Advanced Configuration
+Follow these steps to set up the application on your local machine:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Clone the repository locally using the command:
 
-### Deployment
+git clone <repository_url>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Navigate to the project directory in the terminal:
 
-### `npm run build` fails to minify
+cd <project_directory>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Install the necessary dependencies by running:
+
+npm install
+
+- After the installation is complete, start the application with:
+
+npm start
+
+The application will launch in your default web browser at localhost:3000.
+
+⚠️ Important Note:
+Before performing the above steps, ensure that you have downloaded the backend from the following link to ensure the proper functioning of the application: https://github.com/AndreaMarchica/BE_Le_Barbier_De_Rue
+
+These instructions will guide you through the setup process, allowing you to explore the features of the Barber Shop Management System.

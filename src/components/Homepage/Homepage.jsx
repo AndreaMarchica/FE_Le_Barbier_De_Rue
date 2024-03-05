@@ -39,7 +39,7 @@ const Homepage = () => {
       <div className="container container-fluid ">
         <Row className="col-12 mx-auto">
           <Col className="col-12 text-center py-5 fs-3 myfont">
-            <p className="mb-0">
+            <p className="mb-0 bebas-neue-regular fs-1 ">
               --- PRENOTA LA TUA POLTRONA AL NUMERO <b>019 221 7289</b> ---
             </p>
             <p className="fs-5">oppure accedi e prenotati online</p>

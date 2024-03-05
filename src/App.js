@@ -13,6 +13,7 @@ import MyFooter from "./components/MyFooter";
 import MyPage from "./components/MyPage/MyPage";
 import ContactsPage from "./components/ContactsPage/ContactsPage";
 import ServicesPage from "./components/ServicesPage/ServicesPage";
+import ShopPage from "./components/ShopPage/ShopPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ function App() {
           path="/prenotazioni"
         ></Route>
         <Route element={<ServicesPage></ServicesPage>} path="/servizi"></Route>
+        <Route element={<ShopPage></ShopPage>} path="/store"></Route>
       </Routes>
       {window.location.pathname !== "/servizi" && <MyFooter />}
     </BrowserRouter>

@@ -21,7 +21,7 @@ const ContactsPage = () => {
     <Container className="myfont">
       <Row>
         <Col className="col-12 align-items-center justify-content-center">
-          <p className="fs-2 text-center pt-3">Contatta Le Barbier de Rue</p>
+          <p className="fs-2 text-center pt-3 ">Contatta Le Barbier de Rue</p>
         </Col>
         <Col className="text-center">
           <img src={IgLogo} alt="IG logo" />

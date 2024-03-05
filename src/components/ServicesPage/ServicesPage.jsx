@@ -59,24 +59,26 @@ const ServicesPage = () => {
         ></video>
       </div>
       <div className="list-column p-5 me-5">
-        <h3 className="text-center">I nostri servizi</h3>
+        <h3 className="text-center  bebas-neue-regular fs-1">
+          I nostri servizi
+        </h3>
         <Row className="pt-5">
           <Col>
-            <h3>Capelli</h3>
+            <h3 className="bebas-neue-regular">Capelli</h3>
             <hr />
             {renderServices("capelli")}
           </Col>
         </Row>
         <Row className="pt-5">
           <Col>
-            <h3>Barba</h3>
+            <h3 className="bebas-neue-regular">Barba</h3>
             <hr />
             {renderServices("barba")}
           </Col>
         </Row>
         <Row className="pt-5">
           <Col>
-            <h3>Combo</h3>
+            <h3 className="bebas-neue-regular">Combo</h3>
             <hr />
             {renderServices("combo")}
           </Col>
