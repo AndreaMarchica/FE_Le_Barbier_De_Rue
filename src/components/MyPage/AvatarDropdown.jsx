@@ -5,8 +5,24 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "@nextui-org/react";
+import { useDispatch } from "react-redux";
+import { logoutAction } from "../../redux/actions/index";
+import { useNavigate } from "react-router-dom";
 
 const AvatarDropdown = ({ meDataFromReduxStore }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logoutAction());
+    localStorage.clear();
+    if (window.location.pathname !== "/home") {
+      navigate("/home");
+    } else {
+      window.location.reload();
+    }
+  };
+
   return (
     <Dropdown placement="bottom-start" className="myfont">
       <DropdownTrigger>
@@ -47,7 +63,12 @@ const AvatarDropdown = ({ meDataFromReduxStore }) => {
         <DropdownItem key="settings" textValue="settings">
           Impostazioni
         </DropdownItem>
-        <DropdownItem key="logout" color="danger" textValue="Log Out">
+        <DropdownItem
+          key="logout"
+          color="danger"
+          textValue="Log Out"
+          onClick={handleLogout}
+        >
           Log Out
         </DropdownItem>
       </DropdownMenu>

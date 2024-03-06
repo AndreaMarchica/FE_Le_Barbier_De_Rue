@@ -93,86 +93,88 @@ const Reservations = () => {
   }; */
   return (
     <div className="p-5 myfont">
-      <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        headerToolbar={{
-          left: "prev,next",
-          center: "title",
-          right: "customButton", // Usa il pulsante personalizzato
-        }}
-        customButtons={{
-          customButton: {
-            text: "Oggi",
-            click: handleCustomButtonClick,
-          },
-        }}
-        titleFormat={{
-          month: "long", // Utilizza il nome completo del mese
-          year: "numeric",
-        }}
-        dayHeaderFormat={{
-          weekday: "long", // Utilizza il nome completo del giorno della settimana
-          day: "numeric",
-          omitCommas: true, // Rimuove le virgole tra il giorno e il numero del mese
-        }}
-        ref={calendarRef}
-        initialView="timeGridWeek"
-        editable={false} // Per abilitare la trascinabilità degli eventi, con false impedisce di allungare la durata
-        selectable={true} // Per abilitare la selezione di nuovi eventi cliccando sulle celle
-        selectMirror={true}
-        dayMaxEvents={true}
-        events={events}
-        dateClick={handleDateClick}
-        eventClick={handleEventClick} // Aggiungi la funzione eventClick
-        locale="it" // Imposta la localizzazione in italiano
-        slotLabelFormat={{
-          hour: "numeric",
-          minute: "2-digit",
-          omitZeroMinute: false,
-          meridiem: "short",
-        }}
-        slotDuration="00:30:00" // Imposta la durata degli slot a 30 minuti
-        defaultTimedEventDuration="00:30:00" // Imposta la durata predefinita degli eventi temporizzati a 30 minuti
-        firstDay={1} // Imposta il lunedì come primo giorno della settimana
-        businessHours={{
-          // Imposta gli orari di apertura del barbiere
-          daysOfWeek: [2, 3, 4, 5, 6], // Martedì - Sabato
-          startTime: "09:00", // Ore di apertura
-          endTime: "19:00", // Ore di chiusura
-        }}
-        hiddenDays={[0, 1]} // Nascondi la domenica e il lunedì
-        slotMinTime="09:00" // Nascondi le ore precedenti alle 9:00
-        slotMaxTime="19:00" // Nascondi le ore successive alle 18:00
-        allDaySlot={false} // Imposta allDaySlot su false per nascondere l'opzione All-day
-        slotLabelInterval={{ minutes: 30 }} // Imposta l'intervallo tra le etichette degli orari
-        contentHeight="auto" // Imposta l'altezza del contenuto su 'auto'
-      />
-      {/* Usa il ReservationModal solo per dateClick */}
-      {selectedDate && (
-        <ReservationModal
-          onClose={() => {
-            setSelectedDate(null);
-            setIsReservationModalOpen(false);
+      <div className="container p-10">
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          headerToolbar={{
+            left: "prev,next",
+            center: "title",
+            right: "customButton", // Usa il pulsante personalizzato
           }}
-          selectedDate={selectedDate}
-          isOpen={isReservationModalOpen}
-          formattedDate={formattedDate}
+          customButtons={{
+            customButton: {
+              text: "Oggi",
+              click: handleCustomButtonClick,
+            },
+          }}
+          titleFormat={{
+            month: "long", // Utilizza il nome completo del mese
+            year: "numeric",
+          }}
+          dayHeaderFormat={{
+            weekday: "long", // Utilizza il nome completo del giorno della settimana
+            day: "numeric",
+            omitCommas: true, // Rimuove le virgole tra il giorno e il numero del mese
+          }}
+          ref={calendarRef}
+          initialView="timeGridWeek"
+          editable={false} // Per abilitare la trascinabilità degli eventi, con false impedisce di allungare la durata
+          selectable={true} // Per abilitare la selezione di nuovi eventi cliccando sulle celle
+          selectMirror={true}
+          dayMaxEvents={true}
+          events={events}
+          dateClick={handleDateClick}
+          eventClick={handleEventClick} // Aggiungi la funzione eventClick
+          locale="it" // Imposta la localizzazione in italiano
+          slotLabelFormat={{
+            hour: "numeric",
+            minute: "2-digit",
+            omitZeroMinute: false,
+            meridiem: "short",
+          }}
+          slotDuration="00:30:00" // Imposta la durata degli slot a 30 minuti
+          defaultTimedEventDuration="00:30:00" // Imposta la durata predefinita degli eventi temporizzati a 30 minuti
+          firstDay={1} // Imposta il lunedì come primo giorno della settimana
+          businessHours={{
+            // Imposta gli orari di apertura del barbiere
+            daysOfWeek: [2, 3, 4, 5, 6], // Martedì - Sabato
+            startTime: "09:00", // Ore di apertura
+            endTime: "19:00", // Ore di chiusura
+          }}
+          hiddenDays={[0, 1]} // Nascondi la domenica e il lunedì
+          slotMinTime="09:00" // Nascondi le ore precedenti alle 9:00
+          slotMaxTime="19:00" // Nascondi le ore successive alle 18:00
+          allDaySlot={false} // Imposta allDaySlot su false per nascondere l'opzione All-day
+          slotLabelInterval={{ minutes: 30 }} // Imposta l'intervallo tra le etichette degli orari
+          contentHeight="auto" // Imposta l'altezza del contenuto su 'auto'
         />
-      )}
+        {/* Usa il ReservationModal solo per dateClick */}
+        {selectedDate && (
+          <ReservationModal
+            onClose={() => {
+              setSelectedDate(null);
+              setIsReservationModalOpen(false);
+            }}
+            selectedDate={selectedDate}
+            isOpen={isReservationModalOpen}
+            formattedDate={formattedDate}
+          />
+        )}
 
-      {/* Usa il nuovo modale solo per eventClick */}
-      {selectedEvent && (
-        <ModifyAndDeleteModal
-          onClose={() => {
-            setSelectedEvent(null);
-            setIsModifyAndDeleteModalOpen(false);
-          }}
-          selectedDate={selectedEvent.reservationDate}
-          isOpen={isModifyAndDeleteModalOpen}
-          formattedDate={formattedDate}
-          reservationData={selectedEvent}
-        />
-      )}
+        {/* Usa il nuovo modale solo per eventClick */}
+        {selectedEvent && (
+          <ModifyAndDeleteModal
+            onClose={() => {
+              setSelectedEvent(null);
+              setIsModifyAndDeleteModalOpen(false);
+            }}
+            selectedDate={selectedEvent.reservationDate}
+            isOpen={isModifyAndDeleteModalOpen}
+            formattedDate={formattedDate}
+            reservationData={selectedEvent}
+          />
+        )}
+      </div>
     </div>
   );
 };

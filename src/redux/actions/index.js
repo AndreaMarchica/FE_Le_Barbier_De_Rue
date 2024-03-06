@@ -36,9 +36,13 @@ export const getMeDataAction = () => {
       });
   };
 };
-export const loginAction = () => ({
-  type: LOGIN,
-});
+export const loginAction = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: LOGIN,
+    });
+  };
+};
 
 export const logoutAction = () => ({
   type: LOGOUT,

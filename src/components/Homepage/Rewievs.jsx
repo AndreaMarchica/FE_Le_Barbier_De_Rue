@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Col, Row } from "react-bootstrap";
-import { CiStar } from "react-icons/ci";
+import { GoStarFill } from "react-icons/go";
 
 const libraries = ["places"]; // IMPORTING 'PLACES' LIBRARY FROM GOOGLE MAPS
 
@@ -82,7 +82,7 @@ const Reviews = () => {
                   <div className="d-flex flex-row">
                     {Array.from({ length: Math.floor(review.rating) }).map(
                       (_, index) => (
-                        <CiStar key={index} />
+                        <GoStarFill key={index} />
                       )
                     )}{" "}
                   </div>

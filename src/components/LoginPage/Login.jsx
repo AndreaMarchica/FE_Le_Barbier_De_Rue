@@ -6,11 +6,13 @@ import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { getMeDataAction } from "../../redux/actions";
 import { loginAction } from "../../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
   const toggleVisibility = () => setIsVisible(!isVisible);
   const api = "http://localhost:3001/auth/login";
   const dispatch = useDispatch();
@@ -33,11 +35,11 @@ const Login = () => {
       })
       .then((data) => {
         console.log("Login avvenuto con successo:", data);
-        // Aggiungi un controllo per assicurarti che data sia definito
         if (data && data.token) {
           localStorage.setItem("token", data.token);
           dispatch(loginAction());
           dispatch(getMeDataAction());
+          navigate("/home");
         } else {
           console.error("Dati non validi nella risposta:", data);
         }
