@@ -7,6 +7,8 @@ export const DELETE_RESERVATION = "DELETE_RESERVATION";
 export const GET_CUSTOMERS = "GET_CUSTOMERS";
 export const GET_SERVICES = "GET_SERVICES";
 export const GET_PRODUCTS = "GET_PRODUCTS";
+export const GET_CART_PRODUCTS = "GET_CART_PRODUCTS";
+export const ADD_TO_CART = "ADD_TO_CART";
 
 export const getMeDataAction = () => {
   const token = localStorage.getItem("token");
@@ -231,6 +233,70 @@ export const getProducts = () => {
         dispatch({
           type: GET_PRODUCTS,
           payload: products,
+        });
+      })
+      .catch((err) => {
+        console.log("errore", err);
+      });
+  };
+};
+
+export const getCartProducts = (userId) => {
+  const token = localStorage.getItem("token");
+  return async (dispatch) => {
+    fetch(`http://localhost:3001/cart/items?userId=${userId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Errore nel recupero dei prodotti del carrello");
+        }
+      })
+      .then((cartProducts) => {
+        console.log("Prodotti del carrello dal db", cartProducts);
+        dispatch({
+          type: GET_CART_PRODUCTS,
+          payload: cartProducts,
+        });
+      })
+      .catch((err) => {
+        console.log("errore", err);
+      });
+  };
+};
+
+export const addToCart = (userId, productId, quantity) => {
+  const token = localStorage.getItem("token");
+  return async (dispatch) => {
+    fetch(`http://localhost:3001/cart/add-to-cart`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({
+        userId,
+        productId,
+        quantity,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error("Errore nell'aggiunta del prodotto del carrello");
+        }
+      })
+      .then((product) => {
+        console.log("Prodotto aggiunto al carrello", product);
+        dispatch({
+          type: ADD_TO_CART,
+          payload: product,
         });
       })
       .catch((err) => {

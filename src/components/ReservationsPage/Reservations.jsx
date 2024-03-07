@@ -92,8 +92,8 @@ const Reservations = () => {
     setSelectedDate(null);
   }; */
   return (
-    <div className="p-5 myfont">
-      <div className="container p-10">
+    <div className="p-5 myfont myservice">
+      <div className="container py-12 rounded">
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           headerToolbar={{

@@ -5,11 +5,13 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "@nextui-org/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../../redux/actions/index";
 import { useNavigate } from "react-router-dom";
 
 const AvatarDropdown = ({ meDataFromReduxStore }) => {
+  const isAdmin = useSelector((state) => state.me.userData.role === "ADMIN");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -53,15 +55,26 @@ const AvatarDropdown = ({ meDataFromReduxStore }) => {
         </button>
       </DropdownTrigger>
       <DropdownMenu aria-label="User Actions" variant="flat">
-        <DropdownItem key="profile" className="h-14 gap-2" textValue="Profile">
+        <DropdownItem key="profile" textValue="Profile">
           <p className="font-bold">Signed in as</p>
           <p className="font-bold">@{meDataFromReduxStore.username}</p>{" "}
         </DropdownItem>
-        <DropdownItem key="personal" textValue="personal" href="/me">
+        <DropdownItem
+          className="text-decoration-none"
+          key="personal"
+          textValue="personal"
+          href="/me"
+        >
           Area personale
         </DropdownItem>
-        <DropdownItem key="settings" textValue="settings">
-          Impostazioni
+        <DropdownItem
+          className="text-decoration-none"
+          key="admin"
+          textValue="Admin"
+          href="/gestionale"
+          hidden={!isAdmin}
+        >
+          Pannello amministratore
         </DropdownItem>
         <DropdownItem
           key="logout"

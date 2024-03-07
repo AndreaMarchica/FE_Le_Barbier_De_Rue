@@ -1,10 +1,15 @@
 import { Badge } from "@nextui-org/react";
 import { CartIcon } from "./CartIcon";
+import { getCartProducts } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const Cart = ({ onCartClick }) => {
+  const meDataFromReduxStore = useSelector((state) => state.me.userData);
+  const dispatch = useDispatch();
+
   const handleCartClick = () => {
-    console.log("Cart clicked!");
     onCartClick();
+    dispatch(getCartProducts(meDataFromReduxStore.id));
   };
 
   return (
@@ -12,7 +17,7 @@ const Cart = ({ onCartClick }) => {
       onClick={handleCartClick}
       className="flex items-center gap-3 transition-transform transform hover:scale-105"
     >
-      <Badge color="danger" content={50} shape="circle">
+      <Badge color="danger" content={0} shape="circle">
         <CartIcon size={30} />
       </Badge>
     </div>

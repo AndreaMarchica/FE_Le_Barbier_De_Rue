@@ -40,38 +40,38 @@ const Homepage = () => {
         <div className="container container-fluid ">
           <Row className="col-12 mx-auto">
             <Col className="col-12 text-center py-5 fs-3 myfont">
-              <p className="mb-0 bebas-neue-regular fs-1 ">
+              <p className="mb-0 bebas-neue-regular fs-1 pt-3">
                 --- PRENOTA LA TUA POLTRONA AL NUMERO <b>019 221 7289</b> ---
               </p>
               <p className="fs-5">oppure accedi e prenotati online</p>
             </Col>
             <Col className="orario-container myfont pb-5">
               <div className="orario-circle text-center">
-                Lunedì<br></br>Chiuso
+                LUN<br></br>Chiuso
               </div>
               <div className="orario-circle text-center">
-                Martedì<br></br>9-19
+                MAR<br></br>9-19
               </div>
               <div className="orario-circle text-center">
-                Mercoledì<br></br>9-19
+                MER<br></br>9-19
               </div>
               <div className="orario-circle text-center">
-                Giovedì<br></br>9-19
+                GIO<br></br>9-19
               </div>
               <div className="orario-circle text-center">
-                Venerdì<br></br>9-19
+                VEN<br></br>9-19
               </div>
               <div className="orario-circle text-center">
-                Sabato<br></br>9-19
+                SAB<br></br>9-19
               </div>
               <div className="orario-circle text-center">
-                Domenica<br></br>Chiuso
+                DOM<br></br>Chiuso
               </div>
             </Col>
             <Col>
-              <h3 className="text-center py-3">
+              <h2 className="text-center py-3 pt-5 bebas-neue-regular">
                 Scopri i nostri look su Instagram
-              </h3>
+              </h2>
               <div className="d-flex justify-center">
                 <InstagramEmbed
                   url="https://www.instagram.com/lebarbierderue"
@@ -79,15 +79,17 @@ const Homepage = () => {
                 />
               </div>
             </Col>
-            <Col className="col-12 myfont">
-              <h3 className="py-3 text-center pt-5">La storia</h3>
-              <p>
+            <Col className="col-12 myfont text-center px-5">
+              <h2 className="py-3 text-center pt-5 bebas-neue-regular">
+                La storia
+              </h2>
+              <p className="px-5">
                 Nel cuore di Savona, tra le strade che raccontano storie e
                 tradizioni, sorge LE BARBIER DE RUE, il rifugio della bellezza
                 maschile fondato e guidato con maestria da Samuele D'Agnano, un
                 talentuoso barbiere nato il 2 marzo 1994.
               </p>
-              <p>
+              <p className="px-5">
                 {" "}
                 La sua avventura nel mondo della barba e della rasatura ha
                 inizio a soli 20 anni, quando decide di intraprendere la strada
@@ -96,7 +98,7 @@ const Homepage = () => {
                 allo studio e all'apprendimento delle tecniche più raffinate,
                 plasmando il suo talento con dedizione e precisione.
               </p>
-              <p>
+              <p className="px-5">
                 {" "}
                 Durante il percorso formativo, affianca il banco di scuola
                 all'effervescente atmosfera di Le Garçons de Rue, un prestigioso
@@ -105,7 +107,7 @@ const Homepage = () => {
                 il professionista di grande spessore che oggi accoglie la
                 clientela nel suo tempio della cura maschile.
               </p>
-              <p>
+              <p className="px-5">
                 {" "}
                 Il richiamo della sua terra natia lo guida a tornare a Savona,
                 portando con sé l'eleganza e l'innovazione che ha assorbito
@@ -113,7 +115,7 @@ const Homepage = () => {
                 frutto la sua esperienza per tre anni, conquistando il rispetto
                 della clientela locale e sperimentando nuove sfide ogni giorno.
               </p>
-              <p>
+              <p className="px-5">
                 {" "}
                 Non accontentandosi mai di stagnare, il nostro barbiere
                 intraprende ulteriori corsi con rinomati maestri del settore. Da
@@ -121,7 +123,7 @@ const Homepage = () => {
                 Gargiulo, da Spaghettis ad Alessio Buccheri: ogni lezione è un
                 tassello prezioso che arricchisce il suo bagaglio di competenze.{" "}
               </p>
-              <p>
+              <p className="px-5">
                 Il 9 marzo 2021, il sogno di Samuele prende finalmente forma,
                 dando vita a LE BARBIER DE RUE. In questo tempio della bellezza
                 maschile, l'innovazione si fonde con la tradizione, e ogni
@@ -129,7 +131,7 @@ const Homepage = () => {
                 un'esperienza unica, dove il cliente diventa protagonista di un
                 viaggio di stile e di benessere.
               </p>
-              <p>
+              <p className="px-5">
                 {" "}
                 Samuele D'Agnano, con gioia e onore, vi apre le porte del suo
                 salone in via Orefici 36 R, Savona. Lasciatevi coccolare dalle
@@ -138,7 +140,9 @@ const Homepage = () => {
               </p>
             </Col>
             <Col>
-              <h3 className="py-3 text-center pt-5">Dicono di noi</h3>
+              <h2 className="py-3 text-center pt-5 bebas-neue-regular">
+                Dicono di noi
+              </h2>
               <Reviews></Reviews>
             </Col>
           </Row>

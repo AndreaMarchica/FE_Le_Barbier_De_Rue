@@ -6,6 +6,7 @@ import { handleReservationsReducer } from "../reducers/handleReservationsReducer
 import customerReducer from "../reducers/customerReducer.js";
 import serviceReducer from "../reducers/serviceReducer.js";
 import productsReducer from "../reducers/productsReducer.js";
+import cartReducer from "../reducers/cartReducer.js";
 
 const bigReducer = combineReducers({
   me: meReducer,
@@ -15,6 +16,7 @@ const bigReducer = combineReducers({
   customers: customerReducer,
   serviceReducer: serviceReducer,
   products: productsReducer,
+  cartProducts: cartReducer,
 });
 
 const store = configureStore({

@@ -109,3 +109,20 @@
     0px 2px 8px 0px rgba(0, 0, 0, 0.25),
     0px 0px 0px 1px rgba(255, 255, 255, 0.1) inset;
 }
+.myservice {
+  background-color: #1e2b37;
+}
+.mycontacts {
+  background-image: url("https://barberiagiannini.it/images/slider/cache/6398aac183704ede206ae999d00a9b50/slide_inizio.webp");
+  background-attachment: fixed;
+}
+.social-icons {
+  width: 100px;
+}
+.myshopbg {
+  background-color: #f5e4c8;
+  background-attachment: fixed;
+}
+.mysearchbar {
+  width: 50%;
+}

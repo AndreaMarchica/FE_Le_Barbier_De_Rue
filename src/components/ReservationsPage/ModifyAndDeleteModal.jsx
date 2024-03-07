@@ -118,6 +118,7 @@ const ModifyAndDeleteModal = ({
         isOpen={isOpen}
         onClose={handleCancel}
         className="myfont"
+        placement="center"
       >
         <ModalContent>
           <ModalHeader className="flex flex-col gap-1">

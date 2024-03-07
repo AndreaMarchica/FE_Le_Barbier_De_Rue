@@ -62,7 +62,7 @@ const Reviews = () => {
   };
 
   return (
-    <div className="slider-container py-4">
+    <div className="slider-container py-4 px-5">
       <Slider {...settings}>
         {reviews.map((review) => (
           <div key={review.id || review.time}>
@@ -82,7 +82,7 @@ const Reviews = () => {
                   <div className="d-flex flex-row">
                     {Array.from({ length: Math.floor(review.rating) }).map(
                       (_, index) => (
-                        <GoStarFill key={index} />
+                        <GoStarFill key={index} style={{ color: "#FFD700" }} />
                       )
                     )}{" "}
                   </div>

@@ -14,6 +14,7 @@ import MyPage from "./components/MyPage/MyPage";
 import ContactsPage from "./components/ContactsPage/ContactsPage";
 import ServicesPage from "./components/ServicesPage/ServicesPage";
 import ShopPage from "./components/ShopPage/ShopPage";
+import ControlPanel from "./components/ControlPanel/ControlPanel";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +42,10 @@ function App() {
         ></Route>
         <Route element={<ServicesPage></ServicesPage>} path="/servizi"></Route>
         <Route element={<ShopPage></ShopPage>} path="/store"></Route>
+        <Route
+          element={<ControlPanel></ControlPanel>}
+          path="/gestionale"
+        ></Route>
       </Routes>
       {window.location.pathname !== "/servizi" && <MyFooter />}
     </BrowserRouter>

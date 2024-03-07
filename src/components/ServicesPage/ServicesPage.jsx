@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getServices } from "../../redux/actions";
 import { Col, Container, Row } from "react-bootstrap";
 import Video from "../../assets/Video-by-lebarbierderue.mp4";
+import Scissors from "../../assets/border_darkgrey.webp";
+
 const ServicesPage = () => {
   const dispatch = useDispatch();
   const services = useSelector((state) => state.serviceReducer.services);
@@ -62,10 +64,13 @@ const ServicesPage = () => {
         <h3 className="text-center  bebas-neue-regular fs-1">
           I nostri servizi
         </h3>
+        <div className="d-flex justify-content-center">
+          <img src={Scissors} alt="forbici" />
+        </div>
         <Row className="pt-5">
           <Col>
             <h3 className="bebas-neue-regular">Capelli</h3>
-            <hr />
+            <hr className="dashed" />
             {renderServices("capelli")}
           </Col>
         </Row>

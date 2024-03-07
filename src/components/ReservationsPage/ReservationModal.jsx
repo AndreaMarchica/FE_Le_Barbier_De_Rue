@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { getReservations } from "../../redux/actions";
 import { getCustomers } from "../../redux/actions";
+import { Checkbox } from "flowbite-react";
 
 const ReservationModal = ({
   onClose,
@@ -168,6 +169,8 @@ const ReservationModal = ({
         isOpen={isOpen}
         onClose={handleCancel}
         className="myfont"
+        placement="center"
+        scrollBehavior="inside"
       >
         <ModalContent>
           <ModalHeader className="flex flex-col gap-1">
@@ -247,8 +250,7 @@ const ReservationModal = ({
                       >
                         {" "}
                         <div className="d-flex">
-                          <input
-                            type="checkbox"
+                          <Checkbox
                             id={`haircut-${haircut.id}`}
                             name={`haircut-${haircut.id}`}
                             checked={
@@ -291,7 +293,7 @@ const ReservationModal = ({
                       >
                         {" "}
                         <div className="d-flex">
-                          <input
+                          <Checkbox
                             type="checkbox"
                             id={`beardcut-${beardcut.id}`}
                             name={`beardcut-${beardcut.id}`}
@@ -334,7 +336,7 @@ const ReservationModal = ({
                         }`}
                       >
                         <div className="d-flex">
-                          <input
+                          <Checkbox
                             type="checkbox"
                             id={`combo-${combo.id}`}
                             name={`combo-${combo.id}`}
