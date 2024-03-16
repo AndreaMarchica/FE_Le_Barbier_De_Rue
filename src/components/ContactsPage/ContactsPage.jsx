@@ -19,7 +19,7 @@ const ContactsPage = () => {
   };
   return (
     <div className="mycontacts py-5">
-      <Container className="myfont rounded">
+      <Container className="myfont rounded ciao">
         <Row className="pb-3">
           <Col className="col-12 align-items-center justify-content-center py-3">
             <p className="fs-2 text-center pt-3 ">Contatta Le Barbier de Rue</p>

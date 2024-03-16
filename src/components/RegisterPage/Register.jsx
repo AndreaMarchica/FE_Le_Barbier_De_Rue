@@ -90,8 +90,11 @@ const Register = () => {
   };
 
   return (
-    <Row className="pt-5 mx-auto">
+    <Row className="py-5 mx-auto myfont">
       <Col className="col-5 mx-auto">
+        <h3 className="text-center pb-5">Registrati</h3>
+        <h5 className="pb-2">Inserisci i tuoi dati</h5>
+
         <Form>
           {" "}
           <Col className="col-12">

@@ -37,7 +37,7 @@ const Homepage = () => {
             className="mx-auto video-width"
           />{" "}
         </div>
-        <div className="container container-fluid ">
+        <div className="container container-fluid rounded ">
           <Row className="col-12 mx-auto">
             <Col className="col-12 text-center py-5 fs-3 myfont">
               <p className="mb-0 bebas-neue-regular fs-1 pt-3">

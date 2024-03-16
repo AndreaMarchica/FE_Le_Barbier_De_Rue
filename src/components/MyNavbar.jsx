@@ -24,7 +24,7 @@ const Mynavbar = () => {
       console.log("Is user logged in?", isUserLoggedIn);
     }
   }, [isUserLoggedIn]); // Assicurati di dipendere solo dalle variabili necessarie
-  const pages = ["home", "servizi", "prenotazioni", "store", "contatti"];
+  const pages = ["", "servizi", "prenotazioni", "store", "contatti"];
 
   return (
     <Navbar className="drop-shadow-xl pt-2 myfont">
@@ -38,14 +38,16 @@ const Mynavbar = () => {
         </div>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4 ml-5" justify="center">
-        {pages.map((page) => (
-          <NavbarItem key={page}>
+        {pages.map((page, index) => (
+          <NavbarItem key={index}>
             <Link
               color="foreground"
               href={`/${page}`}
-              className={pathname.includes(page) ? "active" : ""}
+              className={pathname === `/${page}` ? "active" : ""}
             >
-              {page.charAt(0).toUpperCase() + page.slice(1)}
+              {page === ""
+                ? "Home"
+                : page.charAt(0).toUpperCase() + page.slice(1)}
             </Link>
           </NavbarItem>
         ))}

@@ -31,7 +31,7 @@ function App() {
     <BrowserRouter>
       <Mynavbar></Mynavbar>
       <Routes>
-        <Route element={<Homepage></Homepage>} path="/home"></Route>
+        <Route element={<Homepage></Homepage>} path="/"></Route>
         <Route element={<Login></Login>} path="/login"></Route>
         <Route element={<Register></Register>} path="/register"></Route>
         <Route element={<MyPage></MyPage>} path="/me"></Route>

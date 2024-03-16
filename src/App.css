@@ -126,3 +126,16 @@
 .mysearchbar {
   width: 50%;
 }
+#footer-groupLink {
+  text-decoration: none !important;
+}
+.mypage {
+  background-image: url("https://barberiagiannini.it/images/slider/cache/e44de32a140596c6de18c5bf2a1f4608/wallpapertip_barber-wallpaper_956819.webp");
+  background-attachment: fixed;
+}
+.ciao {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.filler {
+  height: 80vh;
+}

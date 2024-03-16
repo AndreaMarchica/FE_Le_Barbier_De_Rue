@@ -80,114 +80,127 @@ const MyPage = () => {
 
   return (
     <>
-      <Container className="myfont">
-        <Row>
-          <Col className="col-3">
-            <div className=" border border-black mt-5 rounded p-2">
-              <div className="d-flex flex-col">
-                <div className="d-flex justify-content-between">
-                  <p>
-                    <b>PROFILO</b>
-                  </p>
-                  <p>Modifica</p>
-                </div>
-                <img
-                  src={meDataFromReduxStore.avatar}
-                  alt="Avatar"
-                  style={{ borderRadius: "50%" }}
-                  className="mx-auto"
-                />{" "}
-              </div>
-              <div className="mx-auto pt-1">
-                <div className="d-flex align-items-center pt-3">
-                  <img src={User} alt="utente" className="my-icon me-3" />
-                  <p className="mb-0">
-                    {meDataFromReduxStore.name +
-                      " " +
-                      meDataFromReduxStore.surname}
-                  </p>
-                </div>
-                <div className="d-flex align-items-center pt-3">
-                  <img src={Email} alt="mail" className="my-icon me-3" />
-                  <p className="mb-0">{meDataFromReduxStore.email}</p>{" "}
-                </div>
-                <div className="d-flex align-items-center pt-3">
-                  <img src={Telefono} alt="phone" className="my-icon me-3" />
-                  <p className="mb-0">{meDataFromReduxStore.phoneNumber}</p>
-                </div>
-              </div>{" "}
-            </div>
-          </Col>
-
-          <Col className="col-9">
-            <div className=" border border-black rounded mt-5 p-2">
-              <div className="d-flex flex-col">
-                <p>
-                  <b>LE MIE PRENOTAZIONI</b>
-                </p>
-                {filteredReservations.map((reservation, index) => (
-                  <div
-                    key={reservation.id}
-                    className={`d-flex flex-row align-items-center rounded p-2 ${
-                      index % 2 === 0 ? "even" : "odd"
-                    }`}
-                  >
-                    <Col className="col-5 d-flex">
-                      <img
-                        src={Calendar}
-                        alt="calendario"
-                        className="my-icon"
-                      />
-                      <p className="m-0 ms-3">
-                        {format(
-                          new Date(reservation.reservationDate),
-                          "EEEE dd/MM/yyyy 'alle ore' HH:mm",
-                          { locale: italianLocale }
-                        )}
-                      </p>{" "}
-                    </Col>
-                    <Col className="col-5 d-flex">
-                      <img
-                        src={Sedia}
-                        alt="calendario"
-                        className="my-icon ms-5"
-                      />
-                      <p className="m-0 ms-3">
-                        {getServiceName(
-                          reservation.haircutId ||
-                            reservation.comboId ||
-                            reservation.beardcutId,
-                          services
-                        )}
-                      </p>
-                    </Col>
-                    <div className="ms-auto">
-                      <Button
-                        color="danger"
-                        size="sm"
-                        onClick={handleButtonClick}
-                      >
-                        Elimina
-                      </Button>
-                    </div>
+      <div className="mypage py-5">
+        <Container className="myfont pb-5 rounded ciao">
+          <Row className="mx-5">
+            <Col className="col-3">
+              <div className=" border border-black mt-5 rounded p-2">
+                <div className="d-flex flex-col">
+                  <div className="d-flex justify-content-between">
+                    <p>
+                      <b>PROFILO</b>
+                    </p>
+                    <p>Modifica</p>
                   </div>
-                ))}
+                  <img
+                    src={meDataFromReduxStore.avatar}
+                    alt="Avatar"
+                    style={{ borderRadius: "50%" }}
+                    className="mx-auto"
+                  />{" "}
+                </div>
+                <div className="mx-auto pt-1">
+                  <div className="d-flex align-items-center pt-3">
+                    <img src={User} alt="utente" className="my-icon me-3" />
+                    <p className="mb-0">
+                      {meDataFromReduxStore.name +
+                        " " +
+                        meDataFromReduxStore.surname}
+                    </p>
+                  </div>
+                  <div className="d-flex align-items-center pt-3">
+                    <img src={Email} alt="mail" className="my-icon me-3" />
+                    <p className="mb-0">{meDataFromReduxStore.email}</p>{" "}
+                  </div>
+                  <div className="d-flex align-items-center pt-3">
+                    <img src={Telefono} alt="phone" className="my-icon me-3" />
+                    <p className="mb-0">{meDataFromReduxStore.phoneNumber}</p>
+                  </div>
+                </div>{" "}
               </div>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col className="col-12 pt-3">
-            <p>
-              <b>I MIEI PUNTI</b>
-            </p>
-          </Col>
-          <Col className="col-4">
-            {" "}
-            <FidelityChart></FidelityChart>
-          </Col>
-        </Row>
-      </Container>{" "}
+            </Col>
+
+            <Col className="col-9">
+              <div className=" border border-black rounded mt-5 p-2">
+                <div className="d-flex flex-col">
+                  <p>
+                    <b>LE MIE PRENOTAZIONI</b>
+                  </p>
+                  {filteredReservations.map((reservation, index) => (
+                    <div
+                      key={reservation.id}
+                      className={`d-flex flex-row align-items-center rounded p-2 ${
+                        index % 2 === 0 ? "even" : "odd"
+                      }`}
+                    >
+                      <Col className="col-5 d-flex">
+                        <img
+                          src={Calendar}
+                          alt="calendario"
+                          className="my-icon"
+                        />
+                        <p className="m-0 ms-3">
+                          {format(
+                            new Date(reservation.reservationDate),
+                            "EEEE dd/MM/yyyy 'alle ore' HH:mm",
+                            { locale: italianLocale }
+                          )}
+                        </p>{" "}
+                      </Col>
+                      <Col className="col-5 d-flex">
+                        <img
+                          src={Sedia}
+                          alt="calendario"
+                          className="my-icon ms-5"
+                        />
+                        <p className="m-0 ms-3">
+                          {getServiceName(
+                            reservation.haircutId ||
+                              reservation.comboId ||
+                              reservation.beardcutId,
+                            services
+                          )}
+                        </p>
+                      </Col>
+                      <div className="ms-auto">
+                        <Button
+                          color="danger"
+                          size="sm"
+                          onClick={handleButtonClick}
+                        >
+                          Elimina
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Col>
+          </Row>
+          <Row className="mx-5">
+            <Col className="col-12 pt-3">
+              <p>
+                <b>I MIEI PUNTI</b>
+              </p>
+            </Col>
+            <Col className="col-4">
+              {" "}
+              <FidelityChart></FidelityChart>
+            </Col>
+            <Col className="col-8 ">
+              <p>
+                <b>Hai accumulato 50 punti!</b>
+              </p>
+              <p>100 punti: sconto del 5% sul prossimo ordine dello store</p>
+              <p>200 punti: sconto del 10% sul prossimo ordine dello store</p>
+              <p>300 punti: sconto del 15% sul prossimo ordine dello store</p>
+              <p>400 punti: sconto del 10% sul prossimo taglio capelli/barba</p>
+              <p>500 punti: prodotto tester in omaggio dello store</p>
+              <p>100 punti: servizio in omaggio: Trattamento</p>
+            </Col>
+          </Row>
+        </Container>{" "}
+      </div>
     </>
   );
 };

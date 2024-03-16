@@ -10,19 +10,18 @@ import Logo from "../assets/LogoSVG1-cropped.svg";
 
 const MyFooter = () => {
   return (
-    <Footer container>
-      <div className="w-full text-center myfont">
+    <Footer container className="myfont">
+      <div className="w-full text-center myfont pt-3">
         <div className="w-full justify-between sm:flex sm:items-center sm:justify-between">
-          <FooterBrand src={Logo} alt="Logo" />
+          <FooterBrand src={Logo} alt="Logo" className="ms-5" />
           <FooterLinkGroup>
-            <FooterLink href="#">About</FooterLink>
             <FooterLink href="#">Privacy Policy</FooterLink>
-            <FooterLink href="#">Licensing</FooterLink>
+            <FooterLink href="#">Lavora con noi</FooterLink>
             <FooterLink href="#">Contact</FooterLink>
           </FooterLinkGroup>
         </div>
         <FooterDivider />
-        <FooterCopyright href="#" by="Flowbite™" year={2022} />
+        <FooterCopyright href="#" by="Le Barbier de Rue™" year={2024} />
       </div>
     </Footer>
   );

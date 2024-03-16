@@ -50,8 +50,10 @@ const Login = () => {
   };
 
   return (
-    <Row className="pt-5 mx-auto">
+    <Row className="pt-5 mx-auto filler myfont">
       <Col className="col-5 mx-auto">
+        <h3 className="text-center pb-5">Login</h3>
+        <h5 className="pb-2">Accedi con le tue credenziali</h5>
         <Form>
           {" "}
           <Col className="col-12">
@@ -100,7 +102,8 @@ const Login = () => {
               Login
             </Button>
           </div>
-        </Form>
+        </Form>{" "}
+        <div className="bg-secondary flex-grow-1"></div>
       </Col>
     </Row>
   );
