@@ -26,6 +26,13 @@ const Mynavbar = () => {
   }, [isUserLoggedIn]); // Assicurati di dipendere solo dalle variabili necessarie
   const pages = ["", "servizi", "prenotazioni", "store", "contatti"];
 
+  const handleReservationsClick = (e) => {
+    if (!isUserLoggedIn) {
+      e.preventDefault(); // Previeni il comportamento predefinito del link
+      alert("Per accedere a questa sezione devi prima essere loggato!");
+    }
+  };
+
   return (
     <Navbar className="drop-shadow-xl pt-2 myfont">
       <NavbarBrand>
@@ -44,6 +51,7 @@ const Mynavbar = () => {
               color="foreground"
               href={`/${page}`}
               className={pathname === `/${page}` ? "active" : ""}
+              onClick={page === "prenotazioni" ? handleReservationsClick : null}
             >
               {page === ""
                 ? "Home"

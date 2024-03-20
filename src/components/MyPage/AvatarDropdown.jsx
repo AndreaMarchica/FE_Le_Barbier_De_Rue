@@ -18,8 +18,9 @@ const AvatarDropdown = ({ meDataFromReduxStore }) => {
   const handleLogout = () => {
     dispatch(logoutAction());
     localStorage.clear();
-    if (window.location.pathname !== "/home") {
-      navigate("/home");
+    if (window.location.pathname !== "/") {
+      navigate("/");
+      window.location.reload();
     } else {
       window.location.reload();
     }

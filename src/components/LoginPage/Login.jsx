@@ -39,7 +39,7 @@ const Login = () => {
           localStorage.setItem("token", data.token);
           dispatch(loginAction());
           dispatch(getMeDataAction());
-          navigate("/home");
+          navigate("/");
         } else {
           console.error("Dati non validi nella risposta:", data);
         }
