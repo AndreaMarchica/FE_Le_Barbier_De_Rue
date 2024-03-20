@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCustomers, getProducts, getServices } from "../../redux/actions";
 import { Col, FormControl, InputGroup, Row } from "react-bootstrap";
 import { Button } from "@nextui-org/react";
+import AddProductModal from "./AddProductModal";
 
 const UserContent = () => {
   const dispatch = useDispatch();
@@ -176,7 +177,7 @@ const ProductContent = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />{" "}
-            <Button color="primary">Inserisci nuovo prodotto</Button>
+            <AddProductModal />
           </InputGroup>{" "}
         </Col>
       </Row>
