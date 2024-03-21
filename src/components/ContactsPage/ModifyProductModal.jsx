@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   ModalContent,
@@ -6,18 +6,17 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  useDisclosure,
   Input,
   Textarea,
   Select,
   SelectItem,
+  useDisclosure,
 } from "@nextui-org/react";
-import { useState } from "react";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { getProducts } from "../../redux/actions";
 
-const AddProductModal = () => {
+const ModifyProductModal = ({ productData }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -27,8 +26,19 @@ const AddProductModal = () => {
   const [stock, setStock] = useState("");
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (isOpen && productData) {
+      setName(productData.name || "");
+      setDescription(productData.description || "");
+      setCategory(productData.category || "");
+      setPrice(productData.price || "");
+      setImageUrl(productData.imageUrl || "");
+      setStock(productData.stock || "");
+    }
+  }, [isOpen, productData]);
+
   const handleSubmit = async () => {
-    const productData = {
+    const updatedProductData = {
       name,
       description,
       category,
@@ -38,20 +48,23 @@ const AddProductModal = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:3001/products", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(productData),
-      });
+      const response = await fetch(
+        `http://localhost:3001/products/${productData.id}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedProductData),
+        }
+      );
 
       if (response.ok) {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Prodotto salvato correttamente",
+          title: "Prodotto modificato correttamente",
           showConfirmButton: false,
           timer: 2000,
         });
@@ -61,22 +74,21 @@ const AddProductModal = () => {
         Swal.fire({
           position: "center",
           icon: "error",
-          title: "Errore nel salvataggio del prodotto",
+          title: "Errore nella modifica del prodotto",
           showConfirmButton: false,
           timer: 2000,
         });
-        console.error("Errore durante il salvataggio del prodotto");
+        console.error("Errore durante la modifica del prodotto");
       }
     } catch (error) {
-      // Gestire gli errori di rete o del server
       console.error("Errore durante la richiesta:", error);
     }
   };
 
   return (
     <>
-      <Button onPress={onOpen} color="primary">
-        Inserisci nuovo prodotto
+      <Button onPress={onOpen} color="primary" className="m-2">
+        Modifica
       </Button>
       <Modal
         isOpen={isOpen}
@@ -87,7 +99,7 @@ const AddProductModal = () => {
         <ModalContent>
           <>
             <ModalHeader className="flex flex-col gap-1">
-              Inserisci nuovo prodotto{" "}
+              Modifica prodotto
             </ModalHeader>
             <ModalBody>
               <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
@@ -103,13 +115,25 @@ const AddProductModal = () => {
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                 >
-                  <SelectItem key="capelli" value="capelli">
+                  <SelectItem
+                    key="capelli"
+                    value="capelli"
+                    selected={category === "capelli"}
+                  >
                     Capelli
                   </SelectItem>
-                  <SelectItem key="barba" value="barba">
+                  <SelectItem
+                    key="barba"
+                    value="barba"
+                    selected={category === "barba"}
+                  >
                     Barba
                   </SelectItem>
-                  <SelectItem key="altro" value="altro">
+                  <SelectItem
+                    key="altro"
+                    value="altro"
+                    selected={category === "altro"}
+                  >
                     Altro
                   </SelectItem>
                 </Select>
@@ -122,7 +146,7 @@ const AddProductModal = () => {
                 />
                 <Input
                   type="number"
-                  label="Price"
+                  label="Prezzo"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                 />
@@ -145,7 +169,7 @@ const AddProductModal = () => {
                 Annulla
               </Button>
               <Button color="primary" onPress={handleSubmit}>
-                Inserisci
+                Modifica
               </Button>
             </ModalFooter>
           </>
@@ -154,4 +178,5 @@ const AddProductModal = () => {
     </>
   );
 };
-export default AddProductModal;
+
+export default ModifyProductModal;
