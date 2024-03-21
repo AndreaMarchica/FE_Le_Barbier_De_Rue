@@ -8,7 +8,7 @@ import {
   ProductContent,
   ServiceContent,
   UserContent,
-} from "../ContactsPage/AdminPanelContent";
+} from "./AdminPanelContent";
 
 const ControlPanel = () => {
   const [activeTab, setActiveTab] = useState(1);

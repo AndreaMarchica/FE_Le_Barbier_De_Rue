@@ -6,6 +6,10 @@ import { Button } from "@nextui-org/react";
 import AddProductModal from "./AddProductModal";
 import Swal from "sweetalert2";
 import ModifyProductModal from "./ModifyProductModal";
+import AddServiceModal from "./AddServiceModal";
+import ModifyServiceModal from "./ModifyServiceModal";
+
+//********************************* USERS *******************************************
 
 const UserContent = () => {
   const dispatch = useDispatch();
@@ -79,6 +83,8 @@ const UserContent = () => {
   );
 };
 
+// ********************************** SERVICES *********************************
+
 const ServiceContent = () => {
   const dispatch = useDispatch();
   const services = useSelector((state) => state.serviceReducer.services);
@@ -99,6 +105,27 @@ const ServiceContent = () => {
       priceString.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
+
+  const handleDeleteService = (serviceId) => {
+    fetch(`http://localhost:3001/services/${serviceId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Se la richiesta è andata a buon fine, aggiorna lo stato dei servizi nel frontend
+          dispatch(getServices());
+        } else {
+          // Se c'è stato un errore nella richiesta DELETE, gestiscilo di conseguenza
+          console.error("Errore durante l'eliminazione del servizio");
+        }
+      })
+      .catch((error) => {
+        console.error("Errore durante la richiesta DELETE:", error);
+      });
+  };
   return (
     <>
       {" "}
@@ -111,7 +138,7 @@ const ServiceContent = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />{" "}
-            <Button color="primary">Inserisci nuovo servizio</Button>
+            <AddServiceModal></AddServiceModal>
           </InputGroup>{" "}
         </Col>
       </Row>
@@ -131,10 +158,33 @@ const ServiceContent = () => {
               <p>Durata: {service.duration} minuti</p>
               <p>Prezzo: {service.price}€</p>
               <div className="d-flex ">
-                <Button color="primary" className="m-2">
-                  Modifica
-                </Button>
-                <Button color="danger" className="m-2">
+                <ModifyServiceModal serviceData={service} />
+
+                <Button
+                  color="danger"
+                  className="m-2"
+                  onClick={() =>
+                    Swal.fire({
+                      title: "Eliminare servizio?",
+                      text: "Stai per cancellare definitivamente questo servizio",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#3085d6",
+                      cancelButtonColor: "#d33",
+                      confirmButtonText: "Elimina",
+                      cancelButtonText: "Annulla",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        handleDeleteService(service.id);
+                        Swal.fire({
+                          title: "Eliminato!",
+                          text: "Il servizio è stato cancellato dal listino",
+                          icon: "success",
+                        });
+                      }
+                    })
+                  }
+                >
                   Elimina
                 </Button>
               </div>
@@ -145,6 +195,8 @@ const ServiceContent = () => {
     </>
   );
 };
+
+// ************************************** PRODUCTS ******************************
 
 const ProductContent = () => {
   const dispatch = useDispatch();
