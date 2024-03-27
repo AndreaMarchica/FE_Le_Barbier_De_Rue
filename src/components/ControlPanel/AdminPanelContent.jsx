@@ -8,6 +8,8 @@ import Swal from "sweetalert2";
 import ModifyProductModal from "./ModifyProductModal";
 import AddServiceModal from "./AddServiceModal";
 import ModifyServiceModal from "./ModifyServiceModal";
+import AddUserModal from "./AddUserModal";
+import ModifyUserModal from "./ModifyUserModal";
 
 //********************************* USERS *******************************************
 
@@ -31,6 +33,27 @@ const UserContent = () => {
     );
   });
 
+  const handleDeleteUser = (userId) => {
+    fetch(`http://localhost:3001/users/${userId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Se la richiesta è andata a buon fine, aggiorna lo stato dei servizi nel frontend
+          dispatch(getCustomers());
+        } else {
+          // Se c'è stato un errore nella richiesta DELETE, gestiscilo di conseguenza
+          console.error("Errore durante l'eliminazione dell'utente");
+        }
+      })
+      .catch((error) => {
+        console.error("Errore durante la richiesta DELETE:", error);
+      });
+  };
+
   return (
     <>
       {" "}
@@ -43,7 +66,7 @@ const UserContent = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />{" "}
-            <Button color="primary">Inserisci nuovo utente</Button>
+            <AddUserModal></AddUserModal>
           </InputGroup>
         </Col>
       </Row>
@@ -68,10 +91,32 @@ const UserContent = () => {
               <p>Telefono: {customer.phoneNumber}</p>
               <p>Email: {customer.email}</p>{" "}
               <div className="d-flex ">
-                <Button color="primary" className="m-2">
-                  Modifica
-                </Button>
-                <Button color="danger" className="m-2">
+                <ModifyUserModal customerData={customer} />
+                <Button
+                  color="danger"
+                  className="m-2"
+                  onClick={() =>
+                    Swal.fire({
+                      title: "Eliminare utente?",
+                      text: "Stai per cancellare definitivamente questo utente",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#3085d6",
+                      cancelButtonColor: "#d33",
+                      confirmButtonText: "Elimina",
+                      cancelButtonText: "Annulla",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        handleDeleteUser(customer.id);
+                        Swal.fire({
+                          title: "Eliminato!",
+                          text: "L'utente è stato cancellato",
+                          icon: "success",
+                        });
+                      }
+                    })
+                  }
+                >
                   Elimina
                 </Button>
               </div>
