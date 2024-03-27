@@ -32,7 +32,7 @@ const ControlPanel = () => {
   };
 
   return (
-    <div className="my-5">
+    <div className="m-5">
       <Row>
         <Col>
           <h2 className="text-center mb-5">Pannello Amministratore</h2>
