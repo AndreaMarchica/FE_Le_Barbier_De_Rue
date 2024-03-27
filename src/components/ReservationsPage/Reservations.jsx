@@ -10,6 +10,7 @@ import { useDisclosure } from "@nextui-org/react";
 import { getReservations } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import ModifyAndDeleteModal from "./ModifyAndDeleteModal";
+import Swal from "sweetalert2";
 
 const Reservations = () => {
   const calendarRef = useRef(null);
@@ -18,17 +19,16 @@ const Reservations = () => {
   const [isReservationModalOpen, setIsReservationModalOpen] = useState(false);
   const [isModifyAndDeleteModalOpen, setIsModifyAndDeleteModalOpen] =
     useState(false);
-
+  const reservationsDataFromRedux = useSelector(
+    (state) => state.reservations.reservations
+  );
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
   const formattedDate = selectedDate
     ? selectedDate.format("YYYY-MM-DDTHH:mm:ss")
     : null;
-
-  const reservationsDataFromRedux = useSelector(
-    (state) => state.reservations.reservations
-  );
   const [events, setEvents] = useState(reservationsDataFromRedux);
+
   const handleCustomButtonClick = () => {
     if (calendarRef.current) {
       calendarRef.current.getApi().gotoDate(moment().toISOString());
@@ -54,12 +54,40 @@ const Reservations = () => {
     }
   }, [reservationsDataFromRedux]);
 
+  const isSlotOccupied = (date) => {
+    const selectedSlotStart = moment(date);
+    const selectedSlotEnd = moment(date).add(30, "minutes");
+
+    // Verifica se lo slot selezionato si sovrappone con un altro evento prenotato
+    return reservationsDataFromRedux.some((reservation) => {
+      const eventStart = moment(reservation.reservationDate);
+      const eventEnd = moment(reservation.reservationDate).add(30, "minutes");
+      return (
+        selectedSlotStart.isSame(eventStart, "minute") &&
+        selectedSlotEnd.isSame(eventEnd, "minute")
+      );
+    });
+  };
+
   const handleDateClick = (arg) => {
     const selectedDate = moment(arg.date || arg.start);
     const currentDate = moment();
     // Controlla se la data selezionata è nel passato
     if (selectedDate.isBefore(currentDate, "day")) {
-      alert("Non puoi prenotare nel passato!");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "La data selezionata è già passata!",
+      });
+      return;
+    }
+    // Controlla se lo slot è già occupato
+    if (isSlotOccupied(selectedDate)) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Questo slot è già stato prenotato!",
+      });
       return;
     }
     // Salva la data selezionata nello stato
@@ -84,13 +112,6 @@ const Reservations = () => {
     }
   };
 
-  /*   const handleModalClose = () => {
-    // Chiudi il modale
-    console.log("Closing modal.");
-    onClose();
-    // Pulisci la data selezionata
-    setSelectedDate(null);
-  }; */
   return (
     <div className="p-5 myfont myservice">
       <div className="container py-12 rounded">
